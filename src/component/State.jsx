@@ -1,5 +1,6 @@
 import React from 'react'
 import AddEditStateModal from './AddEditStateModal';
+import Table from '../common/Table';
 
 function State() {
   const initialstate = [
@@ -193,6 +194,7 @@ function State() {
   const [states, setstates] = React.useState(initialStateWithId);
   const [modalShow, setModalShow] = React.useState(false);
   console.log(states); 
+  // states.map((state)=>{console.log(state)});
   return (
     <>
     {modalShow && (
@@ -204,7 +206,11 @@ function State() {
         }}
         />
         )}
-        <button className='btn btn-primary' onClick={()=>setModalShow(true)} style={{padding:"20px"}}> State</button>
+        <div className="container mt-2">
+        <button className='btn btn-primary float-end' onClick={()=>setModalShow(true)}><i className="bi bi-plus-lg me-1"></i>State</button>
+
+        </div>
+        <Table column={[{key:"name", lable : "Name"},{key:"shorthand",lable:"Shorthand"}]} data={states}/>
         </>
   )
 }

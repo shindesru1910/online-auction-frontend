@@ -16,7 +16,7 @@ function AddEditStateModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Edit State
+            Add State
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
