@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+// import EnterCity from './component/EnterCity';
+// import EnterState from './component/EnterState';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+import City from './component/City';
+import State from './component/State';
+import Navbar from './component/Navbar';
+import {Routes, Route} from 'react-router-dom';
+import Home from './component/Home';
+
+// import { Navbar } from 'react-bootstrap';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar/>
+    <Routes>
+      <Route path ="/state" element={<State/>}/>
+      <Route path ="/home" element={<Home/>}/>
+      <Route path ="/city" element={<City/>}/>
+
+    {/* <EnterState/> */}
+    {/* <EnterCity/> */}
+    </Routes>
+    </>
   );
 }
 
