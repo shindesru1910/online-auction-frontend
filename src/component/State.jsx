@@ -207,7 +207,7 @@ function State() {
         />
         )}
         <div className="container mt-2">
-        <button className='btn btn-primary float-end' onClick={()=>setModalShow(true)}><i className="bi bi-plus-lg me-1"></i>State</button>
+        <button className='btn btn-primary float-end' onClick={()=>setModalShow(true)}><i className="bi bi-plus-lg me-1"></i>Add State</button>
 
         </div>
         <Table column={[{key:"name", lable : "Name"},{key:"shorthand",lable:"Shorthand"}]} data={states}/>

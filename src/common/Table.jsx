@@ -11,7 +11,8 @@ export default function Table(props) {
   return (
     <div className="container">
         <h1>States</h1>
-        <table class="table">
+        <div className="table-responsive">
+        <table className="table table-hover">
         <thead>
             <tr>
             <th scope="col">Id</th>
@@ -24,10 +25,13 @@ export default function Table(props) {
                 <th scope="row">{datum.id}</th>
                 <td>{datum.name}</td>
                 <td>{datum.shorthand}</td>
-                </tr>))}
+                <td><i class="bi bi-pencil-square me-4" style={{cursor: "pointer"}}></i><i class="bi bi-trash"style={{cursor: "pointer"}}></i></td>
+                </tr>
+                ))}
                 
             </tbody>
         </table>
+        </div>
     </div>
   )
 }
