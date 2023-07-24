@@ -3,13 +3,26 @@ import { Button, Modal } from "react-bootstrap";
 
 
 function AddEditStateModal(props) {
-  const { state, id, onHide } = props;
+  const { state, id, onHide,handlesave,flag,editstatedata } = props;
+  
+  let InitialState;
+  if(flag === 'edit'){
+    InitialState = editstatedata;
+  }else{
+    InitialState = {name:'',shorthand:''}
+  }
 
+  const [stateData, setstateData] = useState(InitialState);
+  
+  const handleChange = (e) =>{
+    const {name,value} = e.target;
+    setstateData(Prev => ({...Prev,[name]:value}))
+  }
   try {
     return (
       <Modal
         {...props}
-        size="lg"
+        size="md"
         backdrop="static"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -21,12 +34,26 @@ function AddEditStateModal(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="row mb-2">
-            <div className="col-3 d-flex justify-content-center">State</div>
+            <div className="col-3 d-flex justify-content-center">Name</div>
             <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name="state_name"
+                name="name"
+                value={stateData.name}
+                onChange={handleChange}
+                />
+            </div>
+          </div>
+          <div className="row mb-2">
+            <div className="col-3 d-flex justify-content-center">Shorthand</div>
+            <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                name="shorthand"
+                value={stateData.shorthand}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -34,7 +61,7 @@ function AddEditStateModal(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
-          <Button onClick={null}>Save</Button>
+          <Button onClick={()=>handlesave(stateData)}>Save</Button>
         </Modal.Footer>
       </Modal>
     );

@@ -14,7 +14,7 @@ function City() {
         }}
         />
         )}
-        <button className='btn btn-primary' onClick={()=>setModalShow(true)} style={{padding:"20px"}}>City</button>
+        <button className='btn btn-primary' onClick={()=>setModalShow(true)}>Add City</button>
         </>
   )
 }
