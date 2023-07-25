@@ -24,7 +24,14 @@ function Navbar() {
         <li className="nav-item">
           <Link className="nav-link active" aria-current="page" to="/about">About</Link>
         </li>
+
       </ul>
+      <ul className="navbar-nav ms-auto">
+        <li>
+          <button className="btn btn-secondary nav-link active"type="submit">Logout</button>
+        </li>
+      </ul>
+        
     </div>
   </div>
 </nav>

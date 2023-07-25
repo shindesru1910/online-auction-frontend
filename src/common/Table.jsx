@@ -14,18 +14,17 @@ export default function Table(props) {
         <h1>States</h1>
         <div className="table-responsive">
         <table className="table table-hover">
-        <thead>
+        <thead className="thead-dark">
             <tr>
-            <th scope="col">Id</th>
+            <th scope="col">No.</th>
             {column.map((col)=><th scope="col">{col.lable}</th>)}
-            
+            <th scope="col"></th>
             </tr>
         </thead>
             <tbody>
-                {data.map((datum)=>(<tr key={datum.id}>
-                <th scope="row">{datum.id}</th>
+                {data.map((datum,index)=>(<tr key={datum.id}>
+                <th scope="row">{index+1}</th>
                 <td>{datum.name}</td>
-                <td>{datum.shorthand}</td>
                 <td><i className="bi bi-pencil-square me-4" onClick={()=>{setflag("edit");setmodalshow(true);seteditstatedata(datum)}} style={{cursor: "pointer"}}></i><i className="bi bi-trash" onClick={()=>handledelete(datum)} style={{cursor: "pointer"}}></i></td>
                 </tr>
                 ))}

@@ -45,7 +45,7 @@ function AddEditStateModal(props) {
                 />
             </div>
           </div>
-          <div className="row mb-2">
+          {/* <div className="row mb-2">
             <div className="col-3 d-flex justify-content-center">Shorthand</div>
             <div className="col">
               <input
@@ -56,7 +56,7 @@ function AddEditStateModal(props) {
                 onChange={handleChange}
               />
             </div>
-          </div>
+          </div> */}
           
         </Modal.Body>
         <Modal.Footer>
