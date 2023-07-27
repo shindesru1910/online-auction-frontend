@@ -3,7 +3,9 @@ import Card from "../common/Card";
 
 import { db } from "../firebaseConfig.js";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc ,doc, onSnapshot } from "firebase/firestore";
+
+
 
 function Home() {
   useEffect(() => {
@@ -19,7 +21,12 @@ function Home() {
         console.error("Error adding document: ", e);
       }
     }
-    addData();
+    // addData();
+    const unsub = onSnapshot(doc(db, "users","Dh2egkwXWdh695KF7OZD"), (doc) => {
+      // const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+      // console.log(source, " data: ", doc.data());
+        console.log("Current data: ", doc.data());
+    });
   }, []);
   return (
     <>
