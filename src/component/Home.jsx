@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from '../common/card'
+import Card from '../common/Card'
 
 function Home() {
     return (
