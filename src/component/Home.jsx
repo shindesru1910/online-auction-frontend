@@ -10,15 +10,7 @@ function Home() {
                 <Card name="User" to="/user"/>
                 <Card name="Auction" to="/auction"/>
                 <Card name="Product" to="/product"/>
-
             </div>
-            {/* <div className="conatiner my-3">
-                <State />
-            </div>
-            <div className="container my-3">
-                <City />
-            </div> */}
-
         </>
     )
 }

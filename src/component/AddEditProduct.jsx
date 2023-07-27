@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
-function AddEditStateModal(props) {
+function AddEditProduct(props) {
   const { state, id, onHide,flag,editstatedata,handlesave} = props;
   
   let InitialState;
@@ -58,4 +58,4 @@ function AddEditStateModal(props) {
   }
 }
 
-export default AddEditStateModal;
+export default AddEditProduct;

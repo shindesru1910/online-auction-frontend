@@ -249,9 +249,9 @@ function State() {
           window.location.reload();
         }
     })
-    // const filteredStateData = states.filter(state=>state.id !== stateData.id)
-    // setstates(filteredStateData)
   }
+  // const filteredStateData = states.filter(state=>state.id !== stateData.id)
+  // setstates(filteredStateData)
   return (
     <>
       {modalShow && (
@@ -270,7 +270,7 @@ function State() {
         <button className='btn btn-primary float-end' onClick={() => { setflag("add"); setModalShow(true) }}><i className="bi bi-plus-lg me-1"></i>Add State</button>
 
       </div>
-      <Table column={[{ key: "name", lable: "Name" }]} data={states} setflag={setflag} setmodalshow={setModalShow} seteditstatedata={seteditStateData} handledelete={handleDelete}/>
+      <Table title = "States" column={[{ key: "name", lable: "Name" }]} data_access = {['name']} data={states} setflag={setflag} setmodalshow={setModalShow} seteditdata={seteditStateData} handledelete={handleDelete}/>
     </>
   )
 }

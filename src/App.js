@@ -8,6 +8,7 @@ import State from './component/State';
 import Navbar from './component/Navbar';
 import {Routes, Route} from 'react-router-dom';
 import Home from './component/Home';
+import Product from './component/Product';
 
 // import { Navbar } from 'react-bootstrap';
 
@@ -20,8 +21,8 @@ function App() {
       <Route path ="/state" element={<State/>}/>
       <Route path ="/home" element={<Home/>}/>
       <Route path ="/city" element={<City/>}/>
-
-    {/* <EnterState/> */}
+      <Route path = "/product" element={<Product/>}/>
+      {/* <EnterState/> */}
     {/* <EnterCity/> */}
     </Routes>
     </>
