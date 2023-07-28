@@ -11,7 +11,7 @@ function City() {
   const [flag, setflag] = useState("");
 
   useEffect(() => { 
-    axios.get("http://localhost:8000/user/get-district")
+    axios.get("http://localhost:8000/user/get-city")
       .then((response) => {
         if (response.status === 200) {
           setcity(response.data.data)
@@ -30,7 +30,7 @@ function City() {
       let formdata = new FormData()
       formdata.append('state_id',citydata.state_id)
       formdata.append('name',citydata.name)
-      axios.post("http://localhost:8000/user/create-district",formdata)
+      axios.post("http://localhost:8000/user/create-city",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -43,7 +43,7 @@ function City() {
       formdata.append('id',citydata.id)
       formdata.append('state_id',citydata.state_id)
       formdata.append('name',citydata.name)
-      axios.post("http://localhost:8000/user/update-district",formdata)
+      axios.post("http://localhost:8000/user/update-city",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -57,7 +57,7 @@ function City() {
     console.log(cityData)
     let formdata = new FormData()
     formdata.append('id',cityData.id) 
-    axios.post("http://localhost:8000/user/delete-district",formdata)
+    axios.post("http://localhost:8000/user/delete-city",formdata)
     .then((response)=>{
         if(response.status === 200){
           setModalShow(false);

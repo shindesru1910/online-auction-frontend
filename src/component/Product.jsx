@@ -19,11 +19,15 @@ function Product() {
       })
   },[])
 
-  const handleSave = (stateData) => {
+  const handleSave = (productData) => {
     if(flag === 'add'){
       let formdata = new FormData()
-      formdata.append('name',stateData.name)
-      axios.post("http://localhost:8000/user/create-state",formdata)
+      formdata.append('pro_name',productData.pro_name)
+      formdata.append('pro_purchase_rate',productData.pro_purchase_rate)
+      formdata.append('pro_expected_rate',productData.pro_expected_rate)
+      formdata.append('pro_category',productData.pro_category)
+      formdata.append('pro_qty',productData.pro_qty)
+      axios.post("http://localhost:8000/user/create-product",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -33,9 +37,13 @@ function Product() {
       })
     }else{
       let formdata = new FormData()
-      formdata.append('id',stateData.id)
-      formdata.append('name',stateData.name)
-      axios.post("http://localhost:8000/user/update-state",formdata)
+      formdata.append('id',productData.id)
+      formdata.append('pro_name',productData.pro_name)
+      formdata.append('pro_purchase_rate',productData.pro_purchase_rate)
+      formdata.append('pro_expected_rate',productData.pro_expected_rate)
+      formdata.append('pro_category',productData.pro_category)
+      formdata.append('pro_qty',productData.pro_qty)      
+      axios.post("http://localhost:8000/user/update-product",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -45,11 +53,11 @@ function Product() {
       })
     }
   }
-  const handleDelete = (stateData) =>{
-    console.log(stateData)
+  const handleDelete = (productData) =>{
+    console.log(productData)
     let formdata = new FormData()
-    formdata.append('id',stateData.id) 
-    axios.post("http://localhost:8000/user/delete-state",formdata)
+    formdata.append('id',productData.id) 
+    axios.post("http://localhost:8000/user/delete-product",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);
@@ -65,11 +73,10 @@ function Product() {
           show={modalShow}
           onHide={() => {
             setModalShow(false);
-            // window.location.replace("/user/states");
           }}
           handlesave={handleSave}
           flag={flag}
-          editProductData={editProductData}
+          editproductdata={editProductData}
         />
       )}
       <div className="container mt-2">

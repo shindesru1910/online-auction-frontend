@@ -2,23 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
-function AddEditProduct(props) {
-  const { state, id, onHide,flag,editproductdata,handlesave} = props;
+function AddEditUserModal(props) {
+  const { state, id, onHide,flag,editUserData,handlesave} = props;
   
   let InitialState;
   if(flag === 'edit'){
-    InitialState = editproductdata;
-    console.log(editproductdata);
+    InitialState = editUserData;
+    console.log(editUserData);
   }else{
-    InitialState = {pro_name:'',pro_purchase_rate:'',pro_expected_rate:'',pro_category:'',pro_qty:''}
+    InitialState = {first_name:'',last_name:'',phone:'',password:'',address:'',is_admin:'',state_id:'',city_id:''}
   }
 
-  const [productData, setproductData] = useState(InitialState);
-  console.log(productData);
+  const [userData, setuserData] = useState(InitialState);
+  console.log(userData);
   const handleChange = (e) =>{
     const {name,value} = e.target;
     console.log(name,value);
-    setproductData(Prev => ({...Prev,[name]:value}))
+    setuserData(Prev => ({...Prev,[name]:value}))
   }
   try {
     return (
@@ -36,61 +36,85 @@ function AddEditProduct(props) {
         </Modal.Header>
         <Modal.Body>
           <div className="row mb-2">
-            <div className="col-3 d-flex justify-content-center">Prouct Name</div>
+            <div className="col-3 d-flex justify-content-center">Fisrt Name</div>
             <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name = "pro_name"
-                value={productData.pro_name}
+                name = "first_name"
+                value={userData.first_name}
                 onChange={handleChange}
                 />
                 </div>
             </div>
           <div className="row mb-2">
-           <div className="col-3 d-flex justify-content-center">Purchase Rate</div>
+           <div className="col-3 d-flex justify-content-center">Last Name</div>
            <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name ="pro_purchase_rate"
-                value={productData.pro_purchase_rate}
+                name ="last_name"
+                value={userData.last_name}
                 onChange={handleChange}
                 />
                 </div>
             </div>
           <div className="row mb-2">
-             <div className="col-3 d-flex justify-content-center">Expected Rate</div>
+             <div className="col-3 d-flex justify-content-center">Phone Number</div>
              <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name = "pro_expected_rate"
-                value={productData.pro_expected_rate}
+                name = "phone"
+                value={userData.phone}
                 onChange={handleChange}
                 />
                 </div>
             </div>
           <div className="row mb-2">
-          <div className="col-3 d-flex justify-content-center">Category</div>
+          <div className="col-3 d-flex justify-content-center">Address</div>
           <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name = "pro_category"
-                value={productData.pro_category}
+                name = "address"
+                value={userData.address}
                 onChange={handleChange}
                 />
                 </div>
             </div>
           <div className="row mb-2">
-          <div className="col-3 d-flex justify-content-center">Quantity</div>
+          <div className="col-3 d-flex justify-content-center">Is Admin</div>
           <div className="col">
               <input
                 type="text"
                 className="form-control"
-                name = "pro_qty"
-                value={productData.pro_qty}
+                name = "is_admin"
+                value={userData.is_admin}
+                onChange={handleChange}
+                />
+            </div>
+            </div>
+          <div className="row mb-2">
+          <div className="col-3 d-flex justify-content-center">State Id</div>
+          <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                name = "state_id"
+                value={userData.state_id}
+                onChange={handleChange}
+                />
+            </div>
+            </div>
+          <div className="row mb-2">
+          <div className="col-3 d-flex justify-content-center">City</div>
+          <div className="col">
+              <input
+                type="text"
+                className="form-control"
+                name = "city_id"
+                value={userData.city_id}
                 onChange={handleChange}
                 />
             </div>
@@ -99,7 +123,7 @@ function AddEditProduct(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
-          <Button onClick={()=>handlesave(productData)}>Save</Button>
+          <Button onClick={()=>handlesave(userData)}>Save</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -108,4 +132,4 @@ function AddEditProduct(props) {
   }
 }
 
-export default AddEditProduct;
+export default AddEditUserModal;

@@ -1,7 +1,4 @@
-// import logo from './logo.svg';
 import './App.css';
-// import EnterCity from './component/EnterCity';
-// import EnterState from './component/EnterState';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import City from './component/City';
 import State from './component/State';
@@ -9,6 +6,7 @@ import Navbar from './component/Navbar';
 import {Routes, Route} from 'react-router-dom';
 import Home from './component/Home';
 import Product from './component/Product';
+import User from './component/User';
 
 // import { Navbar } from 'react-bootstrap';
 
@@ -22,8 +20,7 @@ function App() {
       <Route path ="/home" element={<Home/>}/>
       <Route path ="/city" element={<City/>}/>
       <Route path = "/product" element={<Product/>}/>
-      {/* <EnterState/> */}
-    {/* <EnterCity/> */}
+      <Route path = "/user" element={<User/>}/>
     </Routes>
     </>
   );
