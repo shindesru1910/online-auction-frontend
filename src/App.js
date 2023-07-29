@@ -8,6 +8,8 @@ import Home from './component/Home';
 import Product from './component/Product';
 import User from './component/User';
 import Category from './component/Category';
+import Auction from './component/Auction';
+import AddAuction from './component/AddAuction';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
       <Route path = "/product" element={<Product/>}/>
       <Route path = "/user" element={<User/>}/>
       <Route path = "/category" element={<Category/>}/>
+      <Route path = "/auction" element={<Auction/>}/>
+      <Route path = "/add-auction" element={<AddAuction/>}/>
     </Routes>
     </>
   );

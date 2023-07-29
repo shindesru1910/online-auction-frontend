@@ -1,0 +1,7 @@
+/* Media query for screen sizes of 425px or smaller */
+@media (min-width: 600px) {
+    .add-auction-form {
+      width: 50%; /* Set the container width to 50% */
+      max-width: 100%; /* Optional: Set a maximum width to ensure responsiveness */
+    }
+  }
