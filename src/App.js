@@ -7,8 +7,7 @@ import {Routes, Route} from 'react-router-dom';
 import Home from './component/Home';
 import Product from './component/Product';
 import User from './component/User';
-
-// import { Navbar } from 'react-bootstrap';
+import Category from './component/Category';
 
 
 function App() {
@@ -21,6 +20,7 @@ function App() {
       <Route path ="/city" element={<City/>}/>
       <Route path = "/product" element={<Product/>}/>
       <Route path = "/user" element={<User/>}/>
+      <Route path = "/category" element={<Category/>}/>
     </Routes>
     </>
   );

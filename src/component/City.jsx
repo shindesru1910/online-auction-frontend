@@ -84,7 +84,7 @@ function City() {
       <div className="container mt-2">
         <button className='btn btn-primary float-end' onClick={() => { setflag("add"); setModalShow(true) }}><i className="bi bi-plus-lg me-1"></i>Add City</button>
       </div>
-      <Table title = "Cities" column={[{ key: "state", lable: "State" }, { key: "name", lable: "Name" }]} data_access = {['state','name']} data={city} setflag={setflag} setmodalshow={setModalShow} seteditdata={seteditcitydata} handledelete={handleDelete} />
+      <Table title = "Cities" column={[{ key: "state", lable: "State" }, { key: "city", lable: "City" }]} data_access = {['state','name']} data={city} setflag={setflag} setmodalshow={setModalShow} seteditdata={seteditcitydata} handledelete={handleDelete} />
     </>
   )
 }

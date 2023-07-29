@@ -12,7 +12,7 @@ export default function Table(props) {
                         <thead className="thead-dark">
                             <tr>
                                 <th scope="col">No.</th>
-                                {column.map((col) => <th scope="col">{col.lable}</th>)}
+                                {column.map((col,index) => <th scope="col" key={index}>{col.lable}</th>)}
                                 <th scope="col"></th>
                             </tr>
                         </thead>

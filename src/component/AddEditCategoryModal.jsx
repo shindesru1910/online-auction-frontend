@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
-function AddEditStateModal(props) {
-  const { state, id, onHide,flag,editstatedata,handlesave} = props;
+function AddEditCategoryModal(props) {
+  const { state, id, onHide,flag,editcategorydata,handlesave} = props;
   
   let InitialState;
   if(flag === 'edit'){
-    InitialState = editstatedata;
+    InitialState = editcategorydata;
   }else{
     InitialState = {name:''}
   }
 
-  const [stateData, setstateData] = useState(InitialState);
+  const [categoryData, setcategoryData] = useState(InitialState);
   
   const handleChange = (e) =>{
     const {name,value} = e.target;
-    setstateData(Prev => ({...Prev,[name]:value}))
+    setcategoryData(Prev => ({...Prev,[name]:value}))
   }
   try {
     return (
@@ -29,7 +29,7 @@ function AddEditStateModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-          {flag ==='add'?'Add State':'Edit State'}
+          {flag ==='add'?'Add Category':'Edit Category'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -40,7 +40,7 @@ function AddEditStateModal(props) {
                 type="text"
                 className="form-control"
                 name="name"
-                value={stateData.name}
+                value={categoryData.name}
                 onChange={handleChange}
                 />
             </div>
@@ -49,7 +49,7 @@ function AddEditStateModal(props) {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
-          <Button onClick={()=>handlesave(stateData)}>Save</Button>
+          <Button onClick={()=>handlesave(categoryData)}>Save</Button>
         </Modal.Footer>
       </Modal>
     );
@@ -58,4 +58,4 @@ function AddEditStateModal(props) {
   }
 }
 
-export default AddEditStateModal;
+export default AddEditCategoryModal;
