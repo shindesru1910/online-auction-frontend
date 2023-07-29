@@ -29,7 +29,7 @@ function AddEditStateModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add State
+          {flag ==='add'?'Add State':'Edit State'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

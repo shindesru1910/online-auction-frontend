@@ -75,7 +75,6 @@ function City() {
           show={modalShow}
           onHide={() => {
             setModalShow(false);
-            // window.location.replace("/user/states");
           }}
           handlesave={handleSave}
           flag={flag}

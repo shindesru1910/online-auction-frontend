@@ -29,7 +29,7 @@ function AddEditCity(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add City
+          {flag ==='add'?'Add City':'Edit City'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

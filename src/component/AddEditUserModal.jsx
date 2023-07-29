@@ -1,25 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
+import axios from 'axios';
 
 
 function AddEditUserModal(props) {
-  const { state, id, onHide,flag,editUserData,handlesave} = props;
-  
+  const { states, id, onHide,flag,editUserData,handlesave} = props;
+  const [isChecked, setIsChecked] = useState(false);
+  const[cities,setcities] = useState([]);
+  // console.log(cities);
   let InitialState;
   if(flag === 'edit'){
     InitialState = editUserData;
-    console.log(editUserData);
+    // console.log(editUserData);
   }else{
     InitialState = {first_name:'',last_name:'',phone:'',password:'',address:'',is_admin:'',state_id:'',city_id:''}
   }
-
   const [userData, setuserData] = useState(InitialState);
   console.log(userData);
+  useEffect(()=>{
+    if(userData.state_id!==''){
+      
+      let formdata = new FormData()
+      formdata.append('state_id',userData.state_id)
+      axios.post("http://localhost:8000/user/get-all-city-by-state-id",formdata)
+      .then((response)=>{
+        if(response.status === 200){
+          setcities(response.data.data)
+        }
+      })
+    }
+    console.log(userData.state_id)
+  },[userData.state_id])
+  
   const handleChange = (e) =>{
     const {name,value} = e.target;
-    console.log(name,value);
     setuserData(Prev => ({...Prev,[name]:value}))
   }
+  const handleCheckboxChange = (e) => {
+    const {name,checked} = e.target;
+    setuserData(Prev => ({...Prev,[name]:checked}))
+    console.log(e.target.checked);
+  };
   try {
     return (
       <Modal
@@ -31,7 +52,7 @@ function AddEditUserModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add Product
+          {flag ==='add'?'Add User':'Edit user'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -83,42 +104,66 @@ function AddEditUserModal(props) {
                 />
                 </div>
             </div>
+          {flag==='add'&&
+          <>
           <div className="row mb-2">
-          <div className="col-3 d-flex justify-content-center">Is Admin</div>
+          <div className="col-3 d-flex justify-content-center">Password</div>
           <div className="col">
               <input
-                type="text"
+                type="password"
                 className="form-control"
-                name = "is_admin"
-                value={userData.is_admin}
+                name = "password"
+                value={userData.password}
                 onChange={handleChange}
                 />
-            </div>
+                </div>
             </div>
           <div className="row mb-2">
-          <div className="col-3 d-flex justify-content-center">State Id</div>
+          <div className="col-3 d-flex justify-content-center">Confirm Password</div>
           <div className="col">
               <input
-                type="text"
+                type="password"
                 className="form-control"
-                name = "state_id"
-                value={userData.state_id}
+                name = "confirm_password"
+                value={userData.confirm_password}
                 onChange={handleChange}
                 />
+                </div>
             </div>
-            </div>
+             </>
+            }
+          
           <div className="row mb-2">
-          <div className="col-3 d-flex justify-content-center">City</div>
-          <div className="col">
-              <input
-                type="text"
-                className="form-control"
-                name = "city_id"
-                value={userData.city_id}
-                onChange={handleChange}
-                />
+            <div className="col-3 d-flex justify-content-center">State</div>
+            <div className="col">
+          
+            <select value={userData.state_id} name="state_id" onChange={handleChange} class="form-select" aria-label="Default select example">
+              <option selected>States</option>
+              {states.map((state)=><option key={state.id} value={state.id}>{state.name}</option>)}
+            </select>
             </div>
+          </div>
+          <div className="row mb-2">
+            <div className="col-3 d-flex justify-content-center">City</div>
+            <div className="col">
+          
+            <select value={userData.city_id} name="city_id" onChange={handleChange} class="form-select" aria-label="Default select example">
+              <option selected>City</option>
+              {cities.map((city)=><option key={city.id} value={city.id}>{city.name}</option>)}
+            </select>
             </div>
+          </div>
+          <div className="col ml-6">
+          <label>
+          <input
+          type="checkbox"
+          name="is_admin"
+          checked={userData.is_admin}
+          onChange={handleCheckboxChange} // Allow users to toggle the checkbox directly
+          />
+          Is Admin?
+          </label>  
+          </div>
           
         </Modal.Body>
         <Modal.Footer>
