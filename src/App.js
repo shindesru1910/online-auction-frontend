@@ -19,7 +19,7 @@ function App() {
     <Routes>
       <Route path ="/state" element={<State/>}/>
       <Route path ="/home" element={<Home/>}/>
-      <Route path ="/city" element={<City/>}/>
+      <Route path ="/city" element={<City/>}  />
       <Route path = "/product" element={<Product/>}/>
       <Route path = "/user" element={<User/>}/>
       <Route path = "/category" element={<Category/>}/>
