@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../css/add_auction.module.css';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import {errortoast, successtoast} from '../fucntions/toast';
+import { ToastContainer } from 'react-toastify';
+import {successtoast} from '../fucntions/toast';
 
 export default function AddAuction() {
   const InitialState = {product_category_id:'',product_name:'',product_description:'',product_quantity:'',seller_name:'',seller_phone:'',state_id:'',city_id:'',start_price:'',start_date:'',end_date:''}

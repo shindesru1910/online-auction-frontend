@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
 function AddEditCategoryModal(props) {
-  const { state, id, onHide,flag,editcategorydata,handlesave} = props;
+  const { onHide,flag,editcategorydata,handlesave} = props;
   
   let InitialState;
   if(flag === 'edit'){

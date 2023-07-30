@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
 function AddEditCity(props) {
-  const { states, id, onHide,flag, editcitydata,handlesave} = props;
+  const { states, onHide,flag, editcitydata,handlesave} = props;
   // states.map((state)=>{(console.log(state.name))})
   let InitialState;
   if(flag === 'edit'){

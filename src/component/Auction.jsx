@@ -1,6 +1,5 @@
 import React from 'react'
-import Card from '../common/card'
-import AddAuction from './AddAuction'
+import Card from '../common/Card'
 
 export default function Auction() {
   return (

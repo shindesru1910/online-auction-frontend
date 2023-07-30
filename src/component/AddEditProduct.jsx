@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
 function AddEditProduct(props) {
-  const { state, id, onHide,flag,editproductdata,handlesave} = props;
+  const { onHide,flag,editproductdata,handlesave} = props;
   
   let InitialState;
   if(flag === 'edit'){

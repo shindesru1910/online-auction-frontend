@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import AddEditUserModal from './AddEditUserModal';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import Table from '../common/Table';
 import {errortoast, successtoast} from '../fucntions/toast';
 

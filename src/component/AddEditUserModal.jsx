@@ -4,8 +4,8 @@ import axios from 'axios';
 
 
 function AddEditUserModal(props) {
-  const { states, id, onHide, flag, editUserData, handlesave } = props;
-  const [isChecked, setIsChecked] = useState(false);
+  const { states, onHide, flag, editUserData, handlesave } = props;
+  // const [isChecked, setIsChecked] = useState(false);
   const [cities, setcities] = useState([]);
   // console.log(cities);
   let InitialState;
