@@ -10,7 +10,6 @@ export default function AddAuction() {
   const[category,setcategory]=useState([]);
   const [states, setstates] = useState([]);
   const [cities, setcities] = useState([]);
-  console.log(auctionData);
   
   useEffect(()=>{
     axios.get("http://localhost:8000/user/get-category")
@@ -19,7 +18,8 @@ export default function AddAuction() {
           setcategory(response.data.data)
           console.log(response.data.data);
         }
-      }),axios.get("http://localhost:8000/user/get-state")
+      })
+      axios.get("http://localhost:8000/user/get-state")
       .then((response) => {
         if (response.status === 200) {
           setstates(response.data.data)
