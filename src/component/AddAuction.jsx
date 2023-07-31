@@ -40,7 +40,6 @@ export default function AddAuction() {
           }
         })
     }
-    // console.log(auxtionData.state_id)
   }, [auctionData.state_id])
 
   const handleChange = (e) =>{

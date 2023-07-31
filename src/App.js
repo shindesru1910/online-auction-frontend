@@ -10,6 +10,9 @@ import User from './component/User';
 import Category from './component/Category';
 import Auction from './component/Auction';
 import AddAuction from './component/AddAuction';
+import ViewAuction from './component/ViewAuction';
+import ViewEditAuction from './component/ViewEditAuction';
+import EditAuction from './component/EditAuction';
 
 
 function App() {
@@ -25,6 +28,10 @@ function App() {
       <Route path = "/category" element={<Category/>}/>
       <Route path = "/auction" element={<Auction/>}/>
       <Route path = "/add-auction" element={<AddAuction/>}/>
+      <Route path = "/view-auction" element={<ViewAuction/>}/>
+      <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
+      <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
+
     </Routes>
     </>
   );
