@@ -13,14 +13,17 @@ import AddAuction from './component/AddAuction';
 import ViewAuction from './component/ViewAuction';
 import ViewEditAuction from './component/ViewEditAuction';
 import EditAuction from './component/EditAuction';
+import Login from './component/Login';
+import AdminRoute from './common/AdminRoute';
 
 
 function App() {
+
   return (
     <>
     <Navbar/>
     <Routes>
-      <Route path ="/state" element={<State/>}/>
+      <Route path="/state" element={<AdminRoute><State /></AdminRoute> } />
       <Route path ="/home" element={<Home/>}/>
       <Route path ="/city" element={<City/>}  />
       <Route path = "/product" element={<Product/>}/>
@@ -31,6 +34,7 @@ function App() {
       <Route path = "/view-auction" element={<ViewAuction/>}/>
       <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
       <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
+      <Route path = "/login" element={<Login/>}/>
 
     </Routes>
     </>

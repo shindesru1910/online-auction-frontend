@@ -25,7 +25,7 @@ export default function Table(props) {
                                     // {(datum_access === 'is_admin' &&  datum?.[datum_access]) ? <td>Yes</td> : <td>No</td>}
                                 ))}
 
-                                <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum) ;  }} style={{ cursor: "pointer" }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer" }}></i></td>
+                                <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum) ;  }} style={{ cursor: "pointer" }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer",color:"red" }}></i></td>
                             </tr>
                             ))}
 

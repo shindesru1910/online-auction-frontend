@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function AuctionTable(props) {
-    const { column, data } = props;
+    const { column, data,handledelete } = props;
     const navigate = useNavigate();
 
     console.log(data)
     return (
         <>
             <div className="table-responsive">
-                <table class="table table-bordered mt-2">
+                <table className="table table-bordered mt-2">
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
@@ -26,6 +26,7 @@ export default function AuctionTable(props) {
                             ))}
 
                             {/* <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum); }} style={{ cursor: "pointer" }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer" }}></i></td> */}
+                            <i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer",color:"red" }}></i>
                         </tr>
                         ))}
                     </tbody>

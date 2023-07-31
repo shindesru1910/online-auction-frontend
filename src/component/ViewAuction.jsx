@@ -38,6 +38,18 @@ export default function ViewAuction() {
     const setactivetab = (tab) => {
         setactibetab(tab)
     }
+    const handleDelete = (auctionData) =>{
+        console.log(auctionData);
+        let formdata = new FormData()
+        formdata.append('auction_id',auctionData.auction_id) 
+        axios.post("http://localhost:8000/user/delete-auction",formdata)
+        .then((response)=>{
+            if(response.status === 200){
+              console.log(response.data.msg);
+              window.location.reload();
+            }
+        })
+      }
     return (
         <>
             <div className="container mt-3 d-flex flex-wrap justify-content-center">
@@ -53,7 +65,7 @@ export default function ViewAuction() {
                         <Link className={`nav-link ${activetab === 'completed' && 'active'}`} to="#" onClick={() => setactivetab('completed')}>Completed</Link>
                     </li>
                 </ul>
-                <AuctionTable column={[{ key: "auction_id", lable: "Auction Id" }, { key: "product_category_name", lable: "Product category" }, { key: "product_name", lable: "Product Name" }, { key: "product_quantity", lable: "Quantity Of Product" }, { key: "state_name", lable: "State" }, { key: "city_name", lable: "City" }, { key: "start_price", lable: "Start Price" }, { key: "start_date", lable: "Start Date" }, { key: "end_date", lable: "End Date" }]} data={auctionData} />
+                <AuctionTable column={[{ key: "auction_id", lable: "Auction Id" }, { key: "product_category_name", lable: "Product category" }, { key: "product_name", lable: "Product Name" }, { key: "product_quantity", lable: "Quantity Of Product" }, { key: "state_name", lable: "State" }, { key: "city_name", lable: "City" }, { key: "start_price", lable: "Start Price" }, { key: "start_date", lable: "Start Date" }, { key: "end_date", lable: "End Date" }]} data={auctionData} handledelete={handleDelete}/>
             </div>
 
         </>

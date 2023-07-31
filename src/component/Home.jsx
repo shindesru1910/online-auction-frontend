@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Card from '../common/Card'
 import Cityimg from '../images/city.svg'
 import Stateimg from '../images/state.svg'
@@ -8,6 +8,7 @@ import Productimg from'../images/product.svg'
 import Product_cat_img from '../images/product_cat.svg'
 
 function Home() {
+
     return (
         <>
             <div className="container mt-3 d-flex flex-wrap justify-content-center">
