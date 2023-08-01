@@ -16,6 +16,7 @@ function Home() {
                 <Card name="City" to="/city" img={Cityimg}/>
                 <Card name="User" to="/user" img ={userimg}/>
                 <Card name="Auction" to="/auction" img ={Auctionimg}/>
+                <Card name="Go To Auction" to="/go-to-auction" img ={Auctionimg}/>
                 <Card name="Product" to="/product" img={Productimg}/>
                 <Card name="Product Category" to="/category" img={Product_cat_img}/>
             </div>

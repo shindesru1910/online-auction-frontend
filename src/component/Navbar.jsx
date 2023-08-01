@@ -2,6 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
+
+  const logout=()=>{
+    // console.log('Logout');
+    localStorage.clear();
+    window.location.replace('/login');
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,7 +35,7 @@ function Navbar() {
             </ul>
             <ul className="navbar-nav ms-auto">
               <li>
-                <button className="btn btn-secondary nav-link active" type="submit">Logout</button>
+                <button className="btn btn-secondary nav-link active" style={{ width: "66px",height: "40px"}} type="button" onClick={logout}>Logout</button>
               </li>
             </ul>
 

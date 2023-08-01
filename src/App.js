@@ -15,6 +15,8 @@ import ViewEditAuction from './component/ViewEditAuction';
 import EditAuction from './component/EditAuction';
 import Login from './component/Login';
 import AdminRoute from './common/AdminRoute';
+import BidAuction from './component/BidAuction';
+import BidCard from './component/BidCard';
 
 
 function App() {
@@ -30,11 +32,13 @@ function App() {
       <Route path = "/user" element={<User/>}/>
       <Route path = "/category" element={<Category/>}/>
       <Route path = "/auction" element={<Auction/>}/>
+      <Route path = "/go-to-auction" element={<BidAuction/>}/>
       <Route path = "/add-auction" element={<AddAuction/>}/>
       <Route path = "/view-auction" element={<ViewAuction/>}/>
       <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
       <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
       <Route path = "/login" element={<Login/>}/>
+      <Route path = "/bid-card" element={<BidCard/>}/>
 
     </Routes>
     </>
