@@ -38,7 +38,7 @@ function App() {
       <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
       <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
       <Route path = "/login" element={<Login/>}/>
-      <Route path = "/bid-card" element={<BidCard/>}/>
+      <Route path = "/bid-card/:id" element={<BidCard/>}/>
 
     </Routes>
     </>
