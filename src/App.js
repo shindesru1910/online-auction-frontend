@@ -17,30 +17,44 @@ import Login from './component/Login';
 import AdminRoute from './common/AdminRoute';
 import BidAuction from './component/BidAuction';
 import BidCard from './component/BidCard';
-
+import React, { useEffect, useState } from 'react';
 
 function App() {
+  const [tokenExists, setTokenExists] = useState(false);
+
+  useEffect(() => {
+    const checkTokenExists = () => {
+      const token = localStorage.getItem('token');
+
+      if (token) {
+        setTokenExists(true);
+      } else {
+        setTokenExists(false);
+      }
+    };
+
+    checkTokenExists();
+  }, []);
 
   return (
     <>
-    <Navbar/>
-    <Routes>
-      <Route path="/state" element={<AdminRoute><State /></AdminRoute> } />
-      <Route path ="/home" element={<Home/>}/>
-      <Route path ="/city" element={<City/>}  />
-      <Route path = "/product" element={<Product/>}/>
-      <Route path = "/user" element={<User/>}/>
-      <Route path = "/category" element={<Category/>}/>
-      <Route path = "/auction" element={<Auction/>}/>
-      <Route path = "/go-to-auction" element={<BidAuction/>}/>
-      <Route path = "/add-auction" element={<AddAuction/>}/>
-      <Route path = "/view-auction" element={<ViewAuction/>}/>
-      <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
-      <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
-      <Route path = "/login" element={<Login/>}/>
-      <Route path = "/bid-card/:id" element={<BidCard/>}/>
-
-    </Routes>
+      {tokenExists && <Navbar />}
+      <Routes>
+        <Route path="/state" element={<AdminRoute><State/></AdminRoute>} />
+        <Route path ="/home" element={<Home/>}/>
+        <Route path ="/city" element={<City/>}  />
+        <Route path = "/product" element={<Product/>}/>
+        <Route path = "/user" element={<User/>}/>
+        <Route path = "/category" element={<Category/>}/>
+        <Route path = "/auction" element={<Auction/>}/>
+        <Route path = "/go-to-auction" element={<BidAuction/>}/>
+        <Route path = "/add-auction" element={<AddAuction/>}/>
+        <Route path = "/view-auction" element={<ViewAuction/>}/>
+        <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
+        <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
+        <Route path = "/login" element={<Login/>}/>
+        <Route path = "/bid-card/:id" element={<BidCard/>}/>
+        </Routes>
     </>
   );
 }

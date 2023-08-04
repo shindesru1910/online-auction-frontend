@@ -35,7 +35,7 @@ function Navbar() {
             </ul>
             <ul className="navbar-nav ms-auto">
               <li>
-                <button className="btn btn-secondary nav-link active" style={{ width: "66px",height: "40px"}} type="button" onClick={logout}>Logout</button>
+                <button className="btn btn-secondary nav-link active" style={{ width: "66px",height: "40px",background:'red'}} type="button" onClick={logout}>Logout</button>
               </li>
             </ul>
 

@@ -4,19 +4,26 @@ import { useParams } from 'react-router-dom';
 import jwt from 'jwt-decode';
 import { ToastContainer } from 'react-toastify';
 import {errortoast, successtoast} from '../fucntions/toast';
+import { doc, onSnapshot } from "firebase/firestore";
+import {db} from "../firebase";
 
 export default function BidCard() {
     const token = localStorage.getItem("token");
     const user = jwt(token);
-    console.log(user.userphone);
     const InitialState = { product_category_id: '', product_name: '', product_description: '', product_quantity: '', seller_name: '', seller_phone: '', state_id: '', city_id: '', start_price: '', no_of_bids: '', latest_bid: '', your_bid: '', start_date: '', end_date: '' }
     const [BidCardData, setBidCardData] = useState({ InitialState });
     const[bid,setbid] = useState('');
-    console.log(bid)
 
     const { id } = useParams();
 
+    const unsub = onSnapshot(doc(db, "auction", "AUC-1691166509-20"), (doc) => {
+        console.log("Current data: ", doc.data());
+    });
+    
+    unsub();
+    
     useEffect(() => {
+        
         let formdata = new FormData();
         formdata.append("auction_id", id)
         formdata.append("phone", user.userphone)
@@ -27,7 +34,6 @@ export default function BidCard() {
                     axios.post("http://localhost:8000/user/get-user-bid", formdata)
                         .then((response) => {
                             if (response.status === 200) {
-                                console.log(response.data.data.bid);
                                 setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
                             }
                         })
@@ -44,10 +50,11 @@ export default function BidCard() {
         formdata.append("bid", bid)
         axios.post("http://localhost:8000/user/set-user-bid", formdata)
             .then((response) => {
-                if (response.status === 200) {
-                    console.log(response.data);
+                if (response.data.status === 200) {
                     successtoast(response.data.msg);
                     
+                }else{
+                    errortoast(response.data.msg);
                 }
             })
     }
@@ -62,7 +69,7 @@ export default function BidCard() {
         <div className="d-flex justify-content-center rounded ">
             <div className="card shadow mt-3" style={{ width: "18rem" }}>
                 <div className="container d-flex justify-content-center mt-3">
-                    <b>{BidCardData.auction_id} </b>
+                    <b style={{color:'green'}}>{BidCardData.auction_id} </b>
                 </div>
                 <hr />
                 <div className="container">
@@ -98,14 +105,14 @@ export default function BidCard() {
                 <hr />
                 <div className='d-flex justify-content-center'>
                     <div className="container">
-                        <b>Start Date</b>{BidCardData.start_date}
+                        <b style={{color:'red'}}>Start Date</b>{BidCardData.start_date}
                     </div>
-                    <div class="d-flex" style={{ height: "60px", marginTop: "-17px", marginBottom: " -5px" }}>
-                        <div class="vr"></div>
+                    <div className="d-flex" style={{ height: "60px", marginTop: "-17px", marginBottom: " -5px" }}>
+                        <div className="vr"></div>
                     </div>
 
                     <div className="container">
-                        <b>End Date</b>{BidCardData.end_date}
+                        <b style={{color:'red'}}>End Date</b>{BidCardData.end_date}
                     </div>
                 </div>
                 <div className="contain">
