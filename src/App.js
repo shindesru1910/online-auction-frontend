@@ -18,7 +18,9 @@ import AdminRoute from './common/AdminRoute';
 import BidAuction from './component/BidAuction';
 import BidCard from './component/BidCard';
 import React, { useEffect, useState } from 'react';
-// import AuctionSummary from './component/AuctionSummary';
+import AuctionSummary from './component/AuctionSummary';
+
+
 
 function App() {
   const [tokenExists, setTokenExists] = useState(false);
@@ -53,7 +55,7 @@ function App() {
         <Route path = "/view-auction" element={<ViewAuction/>}/>
         <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
         <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
-        {/* <Route path = "/auction-summary" element={<AuctionSummary/>}/> */}
+        <Route path = "/auction-summary/:id" element={<AuctionSummary/>}/>
         <Route path = "/login" element={<Login/>}/>
         <Route path = "/bid-card/:id" element={<BidCard/>}/>
         </Routes>
