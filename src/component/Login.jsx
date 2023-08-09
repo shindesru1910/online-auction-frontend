@@ -3,9 +3,15 @@ import React, { useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import { errortoast } from '../fucntions/toast';
 import Auction from '../images/auction .png';
+import AddEditUserModal from './AddEditUserModal';
+import styles from '../css/login.module.css';
 
 export default function Login() {
     const [login, setlogin] = useState({ phone: '', password: '' })
+    const click = () => {
+        <AddEditUserModal />
+        console.log('Clicked');
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -31,51 +37,64 @@ export default function Login() {
         console.log('Submitted login details:', login);
     };
 
+
     return (
         <>
             <ToastContainer />
-            <body className="main-bg" style={{ background: '#222d32' }}>
+            {/* <div id="login-form">
+                <div id="login-head">
+                <img src={Auction} style={{ width: 70, height: 70 }} />
+                    <h3>Auction</h3>
+                </div>
+                <div id="login-details">
+                    <form action="" >
 
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-3 col-md-2"></div>
-                        <div className="col-lg-6 col-md-8 login-box">
-                            <div className="col-lg-12 login-key">
-                                {/* <i className="fa fa-key" aria-hidden="true"></i> */}
-                                <img src={Auction} style={{ width: 100, height: 100 }} />
-                            </div>
-                            <div className="col-lg-12 login-title">
-                                Login
-                            </div>
+                        <div id="user">
+                            <input type="text" placeholder="Phone Number" name="phone" onChange={handleInputChange} />
+                        </div>
 
-                            <div className="col-lg-12 login-form">
-                                <div className="col-lg-12 login-form">
-                                    <form action="" method="POST">
-                                        <div className="form-group">
-                                            <label className="form-control-label">Phone</label>
-                                            <input type="text" className="form-control" name="phone" onChange={handleInputChange} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label className="form-control-label">Password</label>
-                                            <input type="password" className="form-control" name="password" onChange={handleInputChange} />
-                                        </div>
+                        <div id="pass">
+                            <input type="password"  placeholder="Password" name="password" onChange={handleInputChange}/>
+                        </div>
 
-                                        <div className="col-lg-12 loginbttm">
-                                            <div className="col-lg-6 login-btm login-text">
+                        <div id="submit" className="d-flex justify-content-center">
+                            <input type="submit" value="Log-In" onClick={handleSubmit}/>
+                        </div>
+                        <div class="sign-up">
+                            Not a user?
+                        <a href="#" onClick={click} >Register</a>
+                        </div>
+                    </form>
 
-                                            </div>
-                                            <div className="col-lg-6 login-btm login-button">
-                                                <button type="submit" className="btn btn-outline-primary" onClick={handleSubmit}>LOGIN</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-2"></div>
+                </div>
+            </div> */}
+            <form onSubmit={handleSubmit} className='needs-validation was-validated'>
+            <div className='d-flex align-items-center min-vh-100 mx-4'>
+                <div className={`container border p-3 shadow ${styles['login-form']}`}>
+                    <div class="d-flex justify-content-center align-items-center mb-4" >
+
+                        <img src={Auction} alt="" id={styles['responsive-image']} />
+                    </div>
+                    <div className="d-flex flex-column justify-content-center">
+
+                        <div className="form-floating mb-3">
+                            <input type="tel" name="phone" onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="phone" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required/>
+                            <label htmlFor="floatingInput">Phone</label>
+                            
+                        </div>
+                        <div className="form-floating mb-3">
+                            <input type="password" name="password" onChange={handleInputChange} className="form-control" id="floatingPassword" placeholder="Password" minLength={4} required/>
+                            <label htmlFor="floatingPassword">Password</label>
                         </div>
                     </div>
+                    <div className="d-flex justify-content-center">
+
+                        <button className="btn btn-primary" type='submit'>Login</button>
+                    </div>
                 </div>
-            </body>
+            </div>
+            </form>
+
         </>
     )
 }
