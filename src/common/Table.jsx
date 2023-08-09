@@ -9,7 +9,7 @@ export default function Table(props) {
                 <h1>{title}</h1>
                 <div className="table-responsive">
                     <table className="table table-hover">
-                        <thead className="thead-dark">
+                        <thead className="table-dark">
                             <tr>
                                 <th scope="col">No.</th>
                                 {column.map((col,index) => <th scope="col" key={index}>{col.lable}</th>)}
@@ -25,7 +25,7 @@ export default function Table(props) {
                                     // {(datum_access === 'is_admin' &&  datum?.[datum_access]) ? <td>Yes</td> : <td>No</td>}
                                 ))}
 
-                                <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum) ;  }} style={{ cursor: "pointer" }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer",color:"red" }}></i></td>
+                                <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum) ;  }} style={{ cursor: "pointer",color:'blue' }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer",color:"red" }}></i></td>
                             </tr>
                             ))}
 

@@ -10,7 +10,7 @@ export default function ViewEditAuction() {
     
   return (
     <div className="container mt-3 d-flex flex-wrap justify-content-center">
-        <Card name = "Auction Summary" to="/auction-summary" img={Summary}/>
+        <Card name = "Auction Summary" to={`/auction-summary/${id}`} img={Summary}/>
         <Card name = "Edit auction" to={`/edit-auction/${id}`}img={Editimg}/>
     </div>
   )
