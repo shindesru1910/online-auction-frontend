@@ -10,10 +10,13 @@ export default function ChangeRoute() {
         user = jwt(token);
         user_role = user.role;
     }
-    console.log(user_role);
+    
     if (!!user && user_role === "admin") {
         return <Navigate to="/home" replace/>;
     } else if(!!user && user_role === "user") {
         return <Navigate to="/go-to-auction" replace/>;
+    }else{
+        return <Navigate to="/login" replace/>;
+
     }
 }

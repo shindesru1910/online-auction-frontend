@@ -22,9 +22,6 @@ function UserNav() {
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/home">Home</Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/about">About</Link>
-              </li>
 
             </ul>
             <ul className="navbar-nav ms-auto">
