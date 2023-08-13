@@ -1,17 +1,33 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify';
 import { errortoast } from '../fucntions/toast';
 import Auction from '../images/auction .png';
 import AddEditUserModal from './AddEditUserModal';
 import styles from '../css/login.module.css';
+import { useNavigate } from 'react-router-dom';
+import jwt from 'jwt-decode';
 
 export default function Login() {
     const [login, setlogin] = useState({ phone: '', password: '' })
+    const navigate = useNavigate();
     const click = () => {
         <AddEditUserModal />
         console.log('Clicked');
     }
+
+    useEffect(()=>{
+        const token = localStorage.getItem("token");
+    let user;
+    let user_role;
+    if (token) {
+        user = jwt(token);
+        user_role = user.role;
+    }
+    if(user){
+        return navigate('/');
+    }
+    },[])
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -28,7 +44,7 @@ export default function Login() {
             .then((response) => {
                 if (response.data.status === 200) {
                     localStorage.setItem('token', response.data.token);
-                    window.location.replace('/home');
+                    window.location.replace('/');
                 } else {
                     errortoast(response.data.msg);
                 }

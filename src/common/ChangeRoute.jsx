@@ -2,7 +2,7 @@ import React from 'react'
 import { Navigate } from 'react-router-dom'
 import jwt from 'jwt-decode';
 
-function AdminRoute({ children }) {
+export default function ChangeRoute() {
     const token = localStorage.getItem("token");
     let user;
     let user_role;
@@ -10,13 +10,10 @@ function AdminRoute({ children }) {
         user = jwt(token);
         user_role = user.role;
     }
+    console.log(user_role);
     if (!!user && user_role === "admin") {
-        return children;
-    } 
-    else if (!!user && user_role !== "admin") {
-        return <Navigate to="/" replace/>;
-    } else {
-        return <Navigate to="/login" replace/>;
+        return <Navigate to="/home" replace/>;
+    } else if(!!user && user_role === "user") {
+        return <Navigate to="/go-to-auction" replace/>;
     }
 }
-export default AdminRoute

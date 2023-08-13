@@ -3,6 +3,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import City from './component/City';
 import State from './component/State';
 import Navbar from './component/Navbar';
+import UserNav from './component/UserNav';
 import {Routes, Route} from 'react-router-dom';
 import Home from './component/Home';
 import Product from './component/Product';
@@ -19,11 +20,24 @@ import BidAuction from './component/BidAuction';
 import BidCard from './component/BidCard';
 import React, { useEffect, useState } from 'react';
 import AuctionSummary from './component/AuctionSummary';
+import ChangeRoute from './common/ChangeRoute';
+import UserRoute from './common/UserRoute';
+import jwt from 'jwt-decode';
+// import UserRoute from './common/UserRoute';
 
 
 
 function App() {
   const [tokenExists, setTokenExists] = useState(false);
+  const token = localStorage.getItem("token");
+    let user;
+    let user_role;
+    if (token) {
+        user = jwt(token);
+        user_role = user.role;
+    }
+
+    console.log(user)
 
   useEffect(() => {
     const checkTokenExists = () => {
@@ -41,23 +55,26 @@ function App() {
 
   return (
     <>
-      {tokenExists && <Navbar />}
+      {tokenExists && (
+        user_role === "admin" ? <Navbar /> : <UserNav/>
+      )}
       <Routes>
-        <Route path="/state" element={<AdminRoute><State/></AdminRoute>} />
-        <Route path ="/home" element={<Home/>}/>
-        <Route path ="/city" element={<City/>}  />
-        <Route path = "/product" element={<Product/>}/>
-        <Route path = "/user" element={<User/>}/>
-        <Route path = "/category" element={<Category/>}/>
-        <Route path = "/auction" element={<Auction/>}/>
-        <Route path = "/go-to-auction" element={<BidAuction/>}/>
-        <Route path = "/add-auction" element={<AddAuction/>}/>
-        <Route path = "/view-auction" element={<ViewAuction/>}/>
-        <Route path = "/view-edit-auction/:id" element={<ViewEditAuction/>}/>
-        <Route path = "/edit-auction/:id" element={<EditAuction/>}/>
-        <Route path = "/auction-summary/:id" element={<AuctionSummary/>}/>
+        <Route path="/" element={<ChangeRoute/>} />
         <Route path = "/login" element={<Login/>}/>
-        <Route path = "/bid-card/:id" element={<BidCard/>}/>
+        <Route path="/state" element={<AdminRoute><State/></AdminRoute>} />
+        <Route path ="/home" element={<AdminRoute><Home/></AdminRoute>}/>
+        <Route path ="/city" element={<AdminRoute><City/></AdminRoute>}  />
+        <Route path = "/product" element={<AdminRoute><Product/></AdminRoute>}/>
+        <Route path = "/user" element={<AdminRoute><User/></AdminRoute>}/>
+        <Route path = "/category" element={<AdminRoute><Category/></AdminRoute>}/>
+        <Route path = "/auction" element={<AdminRoute><Auction/></AdminRoute>}/>
+        <Route path = "/add-auction" element={<AdminRoute><AddAuction/></AdminRoute>}/>
+        <Route path = "/view-auction" element={<AdminRoute><ViewAuction/></AdminRoute>}/>
+        <Route path = "/view-edit-auction/:id" element={<AdminRoute><ViewEditAuction/></AdminRoute>}/>
+        <Route path = "/edit-auction/:id" element={<AdminRoute><EditAuction/></AdminRoute>}/>
+        <Route path = "/auction-summary/:id" element={<AdminRoute><AuctionSummary/></AdminRoute>}/>
+        <Route path = "/go-to-auction" element={<UserRoute><BidAuction/></UserRoute>}/>
+        <Route path = "/bid-card/:id" element={<UserRoute><BidCard/></UserRoute>}/>
         </Routes>
     </>
   );
