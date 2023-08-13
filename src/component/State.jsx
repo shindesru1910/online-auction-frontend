@@ -12,7 +12,7 @@ function State() {
   const [flag, setflag] = useState("");
 
   useEffect(()=>{
-      axios.get("http://localhost:8000/user/get-state")
+      axios.get("/user/get-state")
       .then((response)=>{
           if(response.status === 200){
             setstates(response.data.data)
@@ -24,7 +24,7 @@ function State() {
     if(flag === 'add'){
       let formdata = new FormData()
       formdata.append('name',stateData.name)
-      axios.post("http://localhost:8000/user/create-state",formdata)
+      axios.post("/user/create-state",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -37,7 +37,7 @@ function State() {
       let formdata = new FormData()
       formdata.append('id',stateData.id)
       formdata.append('name',stateData.name)
-      axios.post("http://localhost:8000/user/update-state",formdata)
+      axios.post("/user/update-state",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -55,7 +55,7 @@ function State() {
     console.log(stateData)
     let formdata = new FormData()
     formdata.append('id',stateData.id) 
-    axios.post("http://localhost:8000/user/delete-state",formdata)
+    axios.post("/user/delete-state",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);

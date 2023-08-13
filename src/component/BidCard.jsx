@@ -63,11 +63,11 @@ export default function BidCard() {
         let formdata = new FormData();
         formdata.append("auction_id", id)
         formdata.append("phone", user.userphone)
-        axios.post("http://localhost:8000/user/get-card-auction-information", formdata)
+        axios.post("/user/get-card-auction-information", formdata)
             .then((response) => {
                 if (response.status === 200) {
                     setBidCardData(response.data.data)
-                    axios.post("http://localhost:8000/user/get-user-bid", formdata)
+                    axios.post("/user/get-user-bid", formdata)
                         .then((response) => {
                             if (response.status === 200) {
                                 setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
@@ -93,7 +93,7 @@ export default function BidCard() {
         formdata.append("auction_id", id)
         formdata.append("phone", user.userphone)
         formdata.append("bid", bid)
-        axios.post("http://localhost:8000/user/set-user-bid", formdata)
+        axios.post("/user/set-user-bid", formdata)
             .then((response) => {
                 if (response.data.status === 200) {
                     successtoast(response.data.msg);

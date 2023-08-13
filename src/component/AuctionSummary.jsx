@@ -9,7 +9,7 @@ export default function AuctionSummary() {
     useEffect(()=>{
         let formdata = new FormData();
         formdata.append("auction_id",id)
-        axios.post("http://localhost:8000/user/get-auction-summary",formdata)
+        axios.post("/user/get-auction-summary",formdata)
           .then((response)=>{
               if(response.status === 200){
                 setAuctionSummary(response.data.data)

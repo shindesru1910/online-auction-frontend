@@ -14,14 +14,14 @@ function User() {
   const [flag, setflag] = useState("");
 
   useEffect(()=>{
-      axios.get("http://localhost:8000/user/get-user")
+      axios.get("/user/get-user")
       .then((response)=>{
           if(response.status === 200){
             setusers(response.data.data)
           }
       })
   
-      axios.get("http://localhost:8000/user/get-state")
+      axios.get("/user/get-state")
           .then((response)=>{
               if(response.status === 200){
                 setstates(response.data.data)
@@ -45,7 +45,7 @@ function User() {
       formdata.append('is_admin',userData.is_admin)
       formdata.append('state_id',userData.state_id)
       formdata.append('city_id',userData.city_id)
-      axios.post("http://localhost:8000/user/create-user",formdata)
+      axios.post("/user/create-user",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -68,7 +68,7 @@ function User() {
       formdata.append('is_admin',userData.is_admin)
       formdata.append('state_id',userData.state_id)
       formdata.append('city_id',userData.city_id)     
-      axios.post("http://localhost:8000/user/update-user",formdata)
+      axios.post("/user/update-user",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -85,7 +85,7 @@ function User() {
     console.log(userData)
     let formdata = new FormData()
     formdata.append('id',userData.id) 
-    axios.post("http://localhost:8000/user/delete-user",formdata)
+    axios.post("/user/delete-user",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);

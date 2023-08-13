@@ -23,8 +23,12 @@ import AuctionSummary from './component/AuctionSummary';
 import ChangeRoute from './common/ChangeRoute';
 import UserRoute from './common/UserRoute';
 import jwt from 'jwt-decode';
+import axios from 'axios';
 // import UserRoute from './common/UserRoute';
 
+// Set default base URL
+axios.defaults.baseURL = 'https://shindesru1910.pythonanywhere.com';
+// axios.defaults.baseURL = 'http://localhost:8000';
 
 
 function App() {

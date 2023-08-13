@@ -10,7 +10,7 @@ function Category() {
   const [flag, setflag] = useState("");
 
   useEffect(()=>{
-      axios.get("http://localhost:8000/user/get-category")
+      axios.get("/user/get-category")
       .then((response)=>{
           if(response.status === 200){
             setcategorys(response.data.data)
@@ -22,7 +22,7 @@ function Category() {
     if(flag === 'add'){
       let formdata = new FormData()
       formdata.append('name',categoryData.name)
-      axios.post("http://localhost:8000/user/create-category",formdata)
+      axios.post("/user/create-category",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -34,7 +34,7 @@ function Category() {
       let formdata = new FormData()
       formdata.append('id',categoryData.id)
       formdata.append('name',categoryData.name)
-      axios.post("http://localhost:8000/user/update-category",formdata)
+      axios.post("/user/update-category",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -48,7 +48,7 @@ function Category() {
     console.log(categoryData)
     let formdata = new FormData()
     formdata.append('id',categoryData.id) 
-    axios.post("http://localhost:8000/user/delete-category",formdata)
+    axios.post("/user/delete-category",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);

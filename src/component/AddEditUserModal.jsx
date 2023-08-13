@@ -22,7 +22,7 @@ function AddEditUserModal(props) {
 
       let formdata = new FormData()
       formdata.append('state_id', userData.state_id)
-      axios.post("http://localhost:8000/user/get-all-city-by-state-id", formdata)
+      axios.post("/user/get-all-city-by-state-id", formdata)
         .then((response) => {
           if (response.status === 200) {
             setcities(response.data.data)

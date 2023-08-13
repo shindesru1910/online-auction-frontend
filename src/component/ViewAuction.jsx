@@ -10,7 +10,7 @@ export default function ViewAuction() {
     console.log(auctionData);
     useEffect(() => {
         if (activetab === 'live') {
-            axios.get("http://localhost:8000/user/get-live-auctions")
+            axios.get("/user/get-live-auctions")
                 .then((response) => {
                     if (response.status === 200) {
                         setauctionData(response.data.data)
@@ -18,7 +18,7 @@ export default function ViewAuction() {
                 })
         }
         else if (activetab==='upcoming') { 
-            axios.get("http://localhost:8000/user/get-upcoming-auctions")
+            axios.get("/user/get-upcoming-auctions")
                 .then((response) => {
                     if (response.status === 200) {
                         setauctionData(response.data.data)
@@ -26,7 +26,7 @@ export default function ViewAuction() {
                 })
         }
         else if (activetab==='completed') { 
-            axios.get("http://localhost:8000/user/get-completed-auctions")
+            axios.get("/user/get-completed-auctions")
                 .then((response) => {
                     if (response.status === 200) {
                         setauctionData(response.data.data)
@@ -42,7 +42,7 @@ export default function ViewAuction() {
         console.log(auctionData);
         let formdata = new FormData()
         formdata.append('auction_id',auctionData.auction_id) 
-        axios.post("http://localhost:8000/user/delete-auction",formdata)
+        axios.post("/user/delete-auction",formdata)
         .then((response)=>{
             if(response.status === 200){
               console.log(response.data.msg);

@@ -11,7 +11,7 @@ function Product() {
   const [flag, setflag] = useState("");
 
   useEffect(()=>{
-      axios.get("http://localhost:8000/user/get-product")
+      axios.get("/user/get-product")
       .then((response)=>{
           if(response.status === 200){
             setproducts(response.data.data)
@@ -27,7 +27,7 @@ function Product() {
       formdata.append('pro_expected_rate',productData.pro_expected_rate)
       formdata.append('pro_category',productData.pro_category)
       formdata.append('pro_qty',productData.pro_qty)
-      axios.post("http://localhost:8000/user/create-product",formdata)
+      axios.post("/user/create-product",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -43,7 +43,7 @@ function Product() {
       formdata.append('pro_expected_rate',productData.pro_expected_rate)
       formdata.append('pro_category',productData.pro_category)
       formdata.append('pro_qty',productData.pro_qty)      
-      axios.post("http://localhost:8000/user/update-product",formdata)
+      axios.post("/user/update-product",formdata)
       .then((response)=>{
           if(response.status === 200){
             console.log(response.data.msg);
@@ -57,7 +57,7 @@ function Product() {
     console.log(productData)
     let formdata = new FormData()
     formdata.append('id',productData.id) 
-    axios.post("http://localhost:8000/user/delete-product",formdata)
+    axios.post("/user/delete-product",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);

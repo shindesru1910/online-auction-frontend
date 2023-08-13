@@ -40,7 +40,7 @@ export default function Login() {
         let formdata = new FormData()
         formdata.append('phone', login.phone)
         formdata.append('password', login.password)
-        axios.post("http://localhost:8000/user/login", formdata)
+        axios.post("/user/login", formdata)
             .then((response) => {
                 if (response.data.status === 200) {
                     localStorage.setItem('token', response.data.token);

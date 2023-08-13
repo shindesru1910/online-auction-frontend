@@ -12,14 +12,14 @@ export default function AddAuction() {
   const [cities, setcities] = useState([]);
   
   useEffect(()=>{
-    axios.get("http://localhost:8000/user/get-category")
+    axios.get("/user/get-category")
       .then((response) => {
         if (response.status === 200) {
           setcategory(response.data.data)
           console.log(response.data.data);
         }
       })
-      axios.get("http://localhost:8000/user/get-state")
+      axios.get("/user/get-state")
       .then((response) => {
         if (response.status === 200) {
           setstates(response.data.data)
@@ -33,7 +33,7 @@ export default function AddAuction() {
     if (auctionData.state_id !== '') {
       let formdata = new FormData()
       formdata.append('state_id', auctionData.state_id)
-      axios.post("http://localhost:8000/user/get-all-city-by-state-id", formdata)
+      axios.post("/user/get-all-city-by-state-id", formdata)
         .then((response) => {
           if (response.status === 200) {
             setcities(response.data.data)
@@ -68,7 +68,7 @@ export default function AddAuction() {
     formdata.append('start_price',auctionData.start_price)
     formdata.append('start_date',auctionData.start_date)
     formdata.append('end_date',auctionData.end_date)
-    axios.post("http://localhost:8000/user/create-auction",formdata)
+    axios.post("/user/create-auction",formdata)
     .then((response)=>{
         if(response.status === 200){
           console.log(response.data.msg);
