@@ -36,9 +36,11 @@ export default function Login() {
     useEffect(() => {
         axios.get("/user/get-state")
             .then((response) => {
-                if (response.status === 200) {
+                if (response.data.status === 200) {
                     setstates(response.data.data)
-                }
+                }else{
+                    errortoast(response.data.msg);
+                  }
             })
     }, [])
     const handleSave = (userData) => {
@@ -59,12 +61,14 @@ export default function Login() {
             formdata.append('city_id', userData.city_id)
             axios.post("/user/create-user", formdata)
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         console.log(response.data.msg);
                         successtoast(response.data.msg);
                         setModalShow(false);
                         window.location.reload();
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
 

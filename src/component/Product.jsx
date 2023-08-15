@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import AddEditProduct from './AddEditProduct';
 import Table from '../common/Table';
-
+import {errortoast} from '../fucntions/toast';
 function Product() {
   
   const [products, setproducts] = useState([]);
@@ -13,8 +13,10 @@ function Product() {
   useEffect(()=>{
       axios.get("/user/get-product")
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             setproducts(response.data.data)
+          }else{
+            errortoast(response.data.msg);
           }
       })
   },[])
@@ -29,10 +31,12 @@ function Product() {
       formdata.append('pro_qty',productData.pro_qty)
       axios.post("/user/create-product",formdata)
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             console.log(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }else{
+            errortoast(response.data.msg);
           }
       })
     }else{
@@ -45,10 +49,12 @@ function Product() {
       formdata.append('pro_qty',productData.pro_qty)      
       axios.post("/user/update-product",formdata)
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             console.log(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }else{
+            errortoast(response.data.msg);
           }
       })
     }
@@ -59,10 +65,12 @@ function Product() {
     formdata.append('id',productData.id) 
     axios.post("/user/delete-product",formdata)
     .then((response)=>{
-        if(response.status === 200){
+        if(response.data.status === 200){
           console.log(response.data.msg);
           setModalShow(false);
           window.location.reload();
+        }else{
+          errortoast(response.data.msg);
         }
     })
   }

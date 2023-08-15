@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 import AuctionTable from '../common/AuctionTable';
+import Swal from 'sweetalert2';
+import {errortoast} from '../fucntions/toast';
 
 export default function ViewAuction() {
     const [activetab, setactibetab] = useState('live');
@@ -12,25 +14,31 @@ export default function ViewAuction() {
         if (activetab === 'live') {
             axios.get("/user/get-live-auctions")
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
         else if (activetab==='upcoming') { 
             axios.get("/user/get-upcoming-auctions")
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
         else if (activetab==='completed') { 
             axios.get("/user/get-completed-auctions")
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
     }, [activetab])
@@ -38,18 +46,37 @@ export default function ViewAuction() {
     const setactivetab = (tab) => {
         setactibetab(tab)
     }
-    const handleDelete = (auctionData) =>{
-        console.log(auctionData);
-        let formdata = new FormData()
-        formdata.append('auction_id',auctionData.auction_id) 
-        axios.post("/user/delete-auction",formdata)
-        .then((response)=>{
-            if(response.status === 200){
-              console.log(response.data.msg);
-              window.location.reload();
+    const handleDelete = (auctionData) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let formdata = new FormData();
+                formdata.append('auction_id', auctionData.auction_id);
+                axios.post("/user/delete-auction", formdata)
+                    .then((response) => {
+                        if (response.data.status === 200) {
+                            console.log(response.data.msg);
+                            
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then((result)=>window.location.reload())
+                        }else{
+                            errortoast(response.data.msg);
+                          }
+                    });
+                
             }
-        })
-      }
+        });
+    };
     return (
         <>
             <div className="container mt-3 d-flex flex-wrap justify-content-center">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import axios from 'axios';
+import {errortoast} from '../fucntions/toast';
 
 
 function RegisterUser(props) {
@@ -24,8 +25,10 @@ function RegisterUser(props) {
       formdata.append('state_id', userData.state_id)
       axios.post("/user/get-all-city-by-state-id", formdata)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.data.status === 200) {
             setcities(response.data.data)
+          }else{
+            errortoast(response.data.msg);
           }
         })
     }
@@ -52,7 +55,8 @@ function RegisterUser(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            {flag === 'add' ? 'Add User' : 'Edit user'}
+            <h3 style={{color:'blue'}}>Register Here</h3>
+            {/* {flag === 'add' ? 'Add User' : 'Edit user'} */}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

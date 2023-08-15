@@ -1,22 +1,22 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 
 function AddEditStateModal(props) {
-  const {  onHide,flag,editstatedata,handlesave} = props;
-  
+  const { onHide, flag, editstatedata, handlesave, loading } = props;
+
   let InitialState;
-  if(flag === 'edit'){
+  if (flag === 'edit') {
     InitialState = editstatedata;
-  }else{
-    InitialState = {name:''}
+  } else {
+    InitialState = { name: '' }
   }
 
   const [stateData, setstateData] = useState(InitialState);
-  
-  const handleChange = (e) =>{
-    const {name,value} = e.target;
-    setstateData(Prev => ({...Prev,[name]:value}))
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setstateData(Prev => ({ ...Prev, [name]: value }))
   }
   try {
     return (
@@ -29,7 +29,7 @@ function AddEditStateModal(props) {
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-          {flag ==='add'?'Add State':'Edit State'}
+            {flag === 'add' ? 'Add State' : 'Edit State'}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -42,14 +42,20 @@ function AddEditStateModal(props) {
                 name="name"
                 value={stateData.name}
                 onChange={handleChange}
-                />
+              />
             </div>
           </div>
-          
+
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Close</Button>
-          <Button onClick={()=>handlesave(stateData)}>Save</Button>
+          {loading ? <button className="btn btn-primary" type="button" disabled>
+            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Loading...
+          </button>
+            :
+            <button type="button" className="btn btn-primary" onClick={()=>handlesave(stateData)}>
+              Save</button>}
         </Modal.Footer>
       </Modal>
     );

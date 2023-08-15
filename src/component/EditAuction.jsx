@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../css/add_auction.module.css';
 import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
-import { successtoast } from '../fucntions/toast';
+import {errortoast, successtoast} from '../fucntions/toast';
 import { useParams } from 'react-router-dom';
 
 export default function EditAuction() {
@@ -12,6 +12,7 @@ export default function EditAuction() {
     const [category, setcategory] = useState([]);
     const [states, setstates] = useState([]);
     const [cities, setcities] = useState([]);
+    const [loading, setloading] = useState(false);
 
     const { id } = useParams();
     useEffect(() => {
@@ -19,25 +20,31 @@ export default function EditAuction() {
         formdata.append("auction_id", id)
         axios.post("/user/get-auction-by-id", formdata)
             .then((response) => {
-                if (response.status === 200) {
+                if (response.data.status === 200) {
                     setauctionData(response.data.data)
-                }
+                }else{
+                    errortoast(response.data.msg);
+                  }
             })
     }, [])
     useEffect(()=>{
         axios.get("/user/get-category")
           .then((response) => {
-            if (response.status === 200) {
+            if (response.data.status === 200) {
               setcategory(response.data.data)
               console.log(response.data.data);
-            }
+            }else{
+                errortoast(response.data.msg);
+              }
           })
           axios.get("/user/get-state")
           .then((response) => {
-            if (response.status === 200) {
+            if (response.data.status === 200) {
               setstates(response.data.data)
               console.log(response.data.data);
-            }
+            }else{
+                errortoast(response.data.msg);
+              }
           })
       },[])
 
@@ -47,8 +54,10 @@ export default function EditAuction() {
           formdata.append('state_id', auctionData.state_id)
           axios.post("/user/get-all-city-by-state-id", formdata)
             .then((response) => {
-              if (response.status === 200) {
+              if (response.data.status === 200) {
                 setcities(response.data.data)
+              }else{
+                errortoast(response.data.msg);
               }
             })
         }
@@ -66,8 +75,10 @@ export default function EditAuction() {
             setauctionData(prev => ({ ...prev, [name]: value }))
         }
     }
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
 
+        e.preventDefault();
+        setloading(true);
         let formdata = new FormData()
         formdata.append("auction_id", id)
         formdata.append('product_category_id', auctionData.product_category_id)
@@ -82,12 +93,15 @@ export default function EditAuction() {
         formdata.append('end_date', auctionData.end_date)
         axios.post("/user/update-auction", formdata)
             .then((response) => {
-                if (response.status === 200) {
+                if (response.data.status === 200) {
                     console.log(response.data.msg);
                     successtoast(response.data.msg);
                     window.location.reload();
-                }
+                }else{
+                    errortoast(response.data.msg);
+                  }
             })
+            .finally(()=>setloading(false));
     }
     return (
         <>
@@ -175,7 +189,12 @@ export default function EditAuction() {
                     <input type="datetime-local" className="form-control" value={auctionData.end_date} id="exampleFormControlInput1" placeholder='End Date' name="end_date" onChange={handleChange} />
                 </div>
                 <div className="container d-flex justify-content-center">
-                    <button type="button" className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                {loading ? <button className="btn btn-primary" type="button" disabled>
+            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Loading...
+          </button> :
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+              Submit</button>}
                 </div>
             </div>
         </>

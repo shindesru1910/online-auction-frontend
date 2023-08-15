@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import axios from 'axios';
+import {errortoast, successtoast} from '../fucntions/toast';
 
 
 function AddEditUserModal(props) {
@@ -24,8 +25,10 @@ function AddEditUserModal(props) {
       formdata.append('state_id', userData.state_id)
       axios.post("/user/get-all-city-by-state-id", formdata)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.data.status === 200) {
             setcities(response.data.data)
+          }else{
+            errortoast(response.data.msg);
           }
         })
     }

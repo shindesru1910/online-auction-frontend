@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import BidAuctionTable from '../common/BidAuctionTable';
+import {errortoast} from '../fucntions/toast';
 
 export default function BidAuction() {
     const [activetab, setactibetab] = useState('live');
@@ -12,9 +13,11 @@ export default function BidAuction() {
         if (activetab === 'live') {
             axios.get("/user/get-live-auctions")
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
         else if (activetab==='upcoming') { 
@@ -28,9 +31,11 @@ export default function BidAuction() {
         else if (activetab==='completed') { 
             axios.get("/user/get-completed-auctions")
                 .then((response) => {
-                    if (response.status === 200) {
+                    if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }
+                    }else{
+                        errortoast(response.data.msg);
+                      }
                 })
         }
     }, [activetab])
@@ -44,10 +49,12 @@ export default function BidAuction() {
         formdata.append('auction_id',auctionData.auction_id) 
         axios.post("/user/delete-auction",formdata)
         .then((response)=>{
-            if(response.status === 200){
+            if(response.data.status === 200){
               console.log(response.data.msg);
               window.location.reload();
-            }
+            }else{
+                errortoast(response.data.msg);
+              }
         })
       }
     return (

@@ -7,6 +7,7 @@ import { errortoast, successtoast } from '../fucntions/toast';
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebaseConfig";
 
+
 export default function BidCard() {
     const token = localStorage.getItem("token");
     const user = jwt(token);
@@ -34,7 +35,7 @@ export default function BidCard() {
                 setRemainingTime(prevTime => prevTime - 1000);
             }, 1000);
 
-            
+
         } else {
             // If the auction has already ended, set remainingTime to 0
             setRemainingTime(0);
@@ -65,15 +66,19 @@ export default function BidCard() {
         formdata.append("phone", user.userphone)
         axios.post("/user/get-card-auction-information", formdata)
             .then((response) => {
-                if (response.status === 200) {
+                if (response.data.status === 200) {
                     setBidCardData(response.data.data)
                     axios.post("/user/get-user-bid", formdata)
                         .then((response) => {
-                            if (response.status === 200) {
+                            if (response.data.status === 200) {
                                 setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
-                            }
+                            }else{
+                                errortoast(response.data.msg);
+                              }
                         })
-                }
+                }else{
+                    errortoast(response.data.msg);
+                  }
             })
 
         return () => {
@@ -118,15 +123,36 @@ export default function BidCard() {
                         <b style={{ color: 'green' }}>{BidCardData.auction_id} </b>
                     </div>
                     {remainingTime > 0 ? (
-                    <div className="container d-flex justify-content-center">
-                       <b> {new Date(remainingTime).toISOString().substr(11, 8)}</b>
+                        <div className="container d-flex justify-content-center">
+                            <b> {new Date(remainingTime).toISOString().substr(11, 8)}</b>
+                        </div>
+                    ) : (
+                        <div className="container d-flex justify-content-center">
+                            <b>Auction Ended</b>
+                        </div>
+                    )}
+                    {/* <hr /> */}
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..."  style={{height:"50%"}}/>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..."  style={{height:"50%"}}/>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..." style={{height:"50%"}} />
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                ) : (
-                    <div className="container d-flex justify-content-center">
-                        <b>Auction Ended</b>
-                    </div>
-                )}
-                    <hr />
                     <div className="container">
                         <b>Product Name:</b>{BidCardData.product_name}
                     </div>

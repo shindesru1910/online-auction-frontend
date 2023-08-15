@@ -4,6 +4,7 @@ import AddEditUserModal from './AddEditUserModal';
 import { ToastContainer } from 'react-toastify';
 import Table from '../common/Table';
 import {errortoast, successtoast} from '../fucntions/toast';
+import Swal from 'sweetalert2';
 
 function User() {
   
@@ -16,15 +17,19 @@ function User() {
   useEffect(()=>{
       axios.get("/user/get-user")
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             setusers(response.data.data)
+          }else{
+            errortoast(response.data.msg);
           }
       })
   
       axios.get("/user/get-state")
           .then((response)=>{
-              if(response.status === 200){
+              if(response.data.status === 200){
                 setstates(response.data.data)
+              }else{
+                errortoast(response.data.msg);
               }
           })
       }, [])
@@ -47,11 +52,14 @@ function User() {
       formdata.append('city_id',userData.city_id)
       axios.post("/user/create-user",formdata)
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             console.log(response.data.msg);
             successtoast(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }
+          else{
+            errortoast(response.data.msg);
           }
       })
     }else{
@@ -74,6 +82,8 @@ function User() {
             console.log(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }else{
+            errortoast(response.data.msg);
           }
       })
     }
@@ -81,19 +91,38 @@ function User() {
 
   console.log(modalShow);
 
-  const handleDelete = (userData) =>{
-    console.log(userData)
-    let formdata = new FormData()
-    formdata.append('id',userData.id) 
-    axios.post("/user/delete-user",formdata)
-    .then((response)=>{
-        if(response.status === 200){
-          console.log(response.data.msg);
-          setModalShow(false);
-          window.location.reload();
+  const handleDelete = (userData) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let formdata = new FormData();
+            formdata.append('id', userData.id);
+            axios.post("/user/delete-user", formdata)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data.msg);
+                        setModalShow(false);
+                        
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then((result)=>window.location.reload())
+                    }else{
+                      errortoast(response.data.msg);
+                    }
+                });
+            
         }
-    })
-  }
+    });
+};
   return (
     <>
       <ToastContainer />

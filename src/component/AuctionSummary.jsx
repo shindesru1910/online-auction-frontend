@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { errortoast } from '../fucntions/toast';
+import {errortoast} from '../fucntions/toast';
 
 export default function AuctionSummary() {
     const { id } = useParams();

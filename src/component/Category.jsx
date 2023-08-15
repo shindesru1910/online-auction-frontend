@@ -2,6 +2,8 @@ import React,{useEffect,useState} from 'react'
 import axios from 'axios';
 import AddEditCategoryModal from './AddEditCategoryModal';
 import Table from '../common/Table';
+import Swal from 'sweetalert2';
+import {errortoast} from '../fucntions/toast';
 
 function Category() {
   const [categorys, setcategorys] = useState([]);
@@ -12,8 +14,10 @@ function Category() {
   useEffect(()=>{
       axios.get("/user/get-category")
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             setcategorys(response.data.data)
+          }else{
+            errortoast(response.data.msg);
           }
       })
   },[])
@@ -24,10 +28,12 @@ function Category() {
       formdata.append('name',categoryData.name)
       axios.post("/user/create-category",formdata)
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             console.log(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }else{
+            errortoast(response.data.msg);
           }
       })
     }else{
@@ -36,27 +42,48 @@ function Category() {
       formdata.append('name',categoryData.name)
       axios.post("/user/update-category",formdata)
       .then((response)=>{
-          if(response.status === 200){
+          if(response.data.status === 200){
             console.log(response.data.msg);
             setModalShow(false);
             window.location.reload();
+          }else{
+            errortoast(response.data.msg);
           }
       })
     }
   }
-  const handleDelete = (categoryData) =>{
-    console.log(categoryData)
-    let formdata = new FormData()
-    formdata.append('id',categoryData.id) 
-    axios.post("/user/delete-category",formdata)
-    .then((response)=>{
-        if(response.status === 200){
-          console.log(response.data.msg);
-          setModalShow(false);
-          window.location.reload();
+  const handleDelete = (categoryData) => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let formdata = new FormData();
+            formdata.append('id', categoryData.id);
+            axios.post("/user/delete-category", formdata)
+                .then((response) => {
+                    if (response.data.status === 200) {
+                        console.log(response.data.msg);
+                        setModalShow(false);
+                        
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        ).then((result)=>window.location.reload())
+                    }else{
+                      errortoast(response.data.msg);
+                    }
+                });
+            
         }
-    })
-  }
+    });
+};
 
   console.log(editCategoryData);
   return (

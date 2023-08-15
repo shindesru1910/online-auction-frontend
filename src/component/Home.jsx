@@ -13,7 +13,7 @@ function Home() {
     return (
         <>
             <div className="container mt-3 d-flex flex-wrap justify-content-center">
-                <Card name="State" to="/state" img={Stateimg}/>
+                <Card name="State" to="/state" img={Stateimg} />
                 <Card name="City" to="/city" img={Cityimg}/>
                 <Card name="User" to="/user" img ={userimg}/>
                 <Card name="Auction" to="/auction" img ={Auctionimg}/>
