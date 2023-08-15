@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { errortoast } from '../fucntions/toast';
 
 export default function AuctionSummary() {
     const { id } = useParams();
@@ -11,10 +12,12 @@ export default function AuctionSummary() {
         formdata.append("auction_id",id)
         axios.post("/user/get-auction-summary",formdata)
           .then((response)=>{
-              if(response.status === 200){
+              if(response.data.status === 200){
                 setAuctionSummary(response.data.data)
                 console.log(response.data.data)
     
+              }else{
+                errortoast(response.data.msg);
               }
           })
         },[])

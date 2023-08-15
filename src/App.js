@@ -24,6 +24,8 @@ import ChangeRoute from './common/ChangeRoute';
 import UserRoute from './common/UserRoute';
 import jwt from 'jwt-decode';
 import axios from 'axios';
+import RegisterUser from './component/RegisterUser';
+import { ToastContainer } from 'react-toastify';
 // import UserRoute from './common/UserRoute';
 
 // Set default base URL
@@ -41,8 +43,6 @@ function App() {
         user_role = user.role;
     }
 
-    console.log(user)
-
   useEffect(() => {
     const checkTokenExists = () => {
       const token = localStorage.getItem('token');
@@ -59,6 +59,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer />
       {tokenExists && (
         user_role === "admin" ? <Navbar /> : <UserNav/>
       )}
@@ -79,6 +80,7 @@ function App() {
         <Route path = "/auction-summary/:id" element={<AdminRoute><AuctionSummary/></AdminRoute>}/>
         <Route path = "/go-to-auction" element={<UserRoute><BidAuction/></UserRoute>}/>
         <Route path = "/bid-card/:id" element={<UserRoute><BidCard/></UserRoute>}/>
+        <Route path = "/user-register" element={<RegisterUser/>}/>
         </Routes>
     </>
   );

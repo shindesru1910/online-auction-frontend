@@ -1,34 +1,74 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { ToastContainer } from 'react-toastify';
-import { errortoast } from '../fucntions/toast';
+import { errortoast, successtoast } from '../fucntions/toast';
 import Auction from '../images/auction .png';
-import AddEditUserModal from './AddEditUserModal';
+// import AddEditUserModal from './AddEditUserModal';
 import styles from '../css/login.module.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import jwt from 'jwt-decode';
+import RegisterUser from './RegisterUser';
 
 export default function Login() {
-    const [login, setlogin] = useState({ phone: '', password: '' })
+    const [login, setlogin] = useState({ phone: '', password: '' });
+    const [users, setusers] = useState([]);
+    const [states, setstates] = useState([]);
+    const [modalShow, setModalShow] = useState(false);
+    const [flag, setflag] = useState("");
     const navigate = useNavigate();
-    const click = () => {
-        <AddEditUserModal />
-        console.log('Clicked');
-    }
+    // const click = () => {
+    //     <AddEditUserModal />
+    //     console.log('Clicked');
+    // }
 
-    useEffect(()=>{
+    useEffect(() => {
         const token = localStorage.getItem("token");
-    let user;
-    let user_role;
-    if (token) {
-        user = jwt(token);
-        user_role = user.role;
-    }
-    if(user){
-        return navigate('/');
-    }
-    },[])
+        let user;
+        let user_role;
+        if (token) {
+            user = jwt(token);
+            user_role = user.role;
+        }
+        if (user) {
+            return navigate('/');
+        }
+    }, [])
 
+    useEffect(() => {
+        axios.get("/user/get-state")
+            .then((response) => {
+                if (response.status === 200) {
+                    setstates(response.data.data)
+                }
+            })
+    }, [])
+    const handleSave = (userData) => {
+        if (flag === 'add') {
+            if (userData.password !== userData.confirm_password) {
+                errortoast('Password and confirm password is not matched');
+                return
+            }
+
+            let formdata = new FormData()
+            formdata.append('first_name', userData.first_name)
+            formdata.append('last_name', userData.last_name)
+            formdata.append('phone', userData.phone)
+            formdata.append('password', userData.password)
+            formdata.append('address', userData.address)
+            formdata.append('is_admin', userData.is_admin)
+            formdata.append('state_id', userData.state_id)
+            formdata.append('city_id', userData.city_id)
+            axios.post("/user/create-user", formdata)
+                .then((response) => {
+                    if (response.status === 200) {
+                        console.log(response.data.msg);
+                        successtoast(response.data.msg);
+                        setModalShow(false);
+                        window.location.reload();
+                    }
+                })
+        }
+
+    }
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         // console.log(name,value);
@@ -56,7 +96,18 @@ export default function Login() {
 
     return (
         <>
-            <ToastContainer />
+            
+            {modalShow && (
+                <RegisterUser
+                    states={states}
+                    show={modalShow}
+                    onHide={() => {
+                        setModalShow(false);
+                    }}
+                    handlesave={handleSave}
+                    flag={flag}
+                />
+            )}
             {/* <div id="login-form">
                 <div id="login-head">
                 <img src={Auction} style={{ width: 70, height: 70 }} />
@@ -76,7 +127,7 @@ export default function Login() {
                         <div id="submit" className="d-flex justify-content-center">
                             <input type="submit" value="Log-In" onClick={handleSubmit}/>
                         </div>
-                        <div class="sign-up">
+                        <div className="sign-up">
                             Not a user?
                         <a href="#" onClick={click} >Register</a>
                         </div>
@@ -85,32 +136,36 @@ export default function Login() {
                 </div>
             </div> */}
             <form onSubmit={handleSubmit} className='needs-validation was-validated'>
-            <div className='d-flex align-items-center min-vh-100 mx-4'>
-                <div className={`container border p-3 shadow ${styles['login-form']}`}>
-                    <div class="d-flex justify-content-center align-items-center mb-4" >
-
-                        <img src={Auction} alt="" id={styles['responsive-image']} />
-                    </div>
-                    <div className="d-flex flex-column justify-content-center">
-
-                        <div className="form-floating mb-3">
-                            <input type="tel" name="phone" onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="phone" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required/>
-                            <label htmlFor="floatingInput">Phone</label>
-                            
+                <div className='d-flex align-items-center min-vh-100 mx-4'>
+                    <div className={`container border p-3 shadow ${styles['login-form']}`}>
+                        <div className="d-flex justify-content-center align-items-center mb-4" >
+                            <img src={Auction} alt="" id={styles['responsive-image']} />
                         </div>
-                        <div className="form-floating mb-3">
-                            <input type="password" name="password" onChange={handleInputChange} className="form-control" id="floatingPassword" placeholder="Password" minLength={4} required/>
-                            <label htmlFor="floatingPassword">Password</label>
-                        </div>
-                    </div>
-                    <div className="d-flex justify-content-center">
+                        <div className="d-flex flex-column justify-content-center">
 
-                        <button className="btn btn-primary" type='submit'>Login</button>
+                            <div className="form-floating mb-3">
+                                <input type="tel" name="phone" onChange={handleInputChange} className="form-control" id="floatingInput" placeholder="phone" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required />
+                                <label htmlFor="floatingInput">Phone</label>
+
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input type="password" name="password" onChange={handleInputChange} className="form-control" id="floatingPassword" placeholder="Password" minLength={4} required />
+                                <label htmlFor="floatingPassword">Password</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                {/* <input type="password" name="password" onChange={handleInputChange} className="form-control" id="floatingPassword" placeholder="Password" minLength={4} required/> */}
+                                Not a user? <Link to='#' onClick={() => { setflag("add"); setModalShow(true) }}>Register</Link>
+                            </div>
+                        </div>
+                        <div className="d-flex justify-content-center">
+
+                            <button className="btn btn-primary" type='submit'>Login</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </form>
 
         </>
     )
+
 }
