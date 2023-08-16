@@ -3,12 +3,27 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function AuctionTable(props) {
-    const { column, data,handledelete } = props;
+    const { column, data, handledelete, activetab, startDate, endDate, setStartDate, setEndDate,fetchDataBetweenDates } = props;
     const navigate = useNavigate();
 
     console.log(data)
     return (
         <>
+            {activetab === 'completed' && <div className="container mt-3 d-flex flex-wrap gap-2 justify-content-end">
+                <div className=''>
+                    <label className="form-label">Start Date</label>
+                    <input type="date" className="form-control" style={{ marginLeft: '8px', marginRight: '8px' }} value={startDate} onChange={e => setStartDate(e.target.value)} />
+                </div>
+                <div>
+                    <label className="form-label">End Date</label>
+                    <input type='date' className="form-control" style={{ marginLeft: '8px', marginRight: '8px' }} value={endDate} onChange={e => setEndDate(e.target.value)} />
+
+                </div>
+                <div className='d-flex align-items-end ms-2'>
+
+                    <button type="button" className="btn btn-outline-primary" onClick={fetchDataBetweenDates}>OK</button>
+                </div>
+            </div>}
             <div className="table-responsive">
                 <table className="table table-bordered mt-2">
                     <thead>
@@ -26,7 +41,7 @@ export default function AuctionTable(props) {
                             ))}
 
                             {/* <td><i className="bi bi-pencil-square me-4" onClick={() => { setflag("edit"); setmodalshow(true); seteditdata(datum); }} style={{ cursor: "pointer" }}></i><i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer" }}></i></td> */}
-                            <i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer",color:"red" }}></i>
+                            <i className="bi bi-trash" onClick={() => handledelete(datum)} style={{ cursor: "pointer", color: "red" }}></i>
                         </tr>
                         ))}
                     </tbody>

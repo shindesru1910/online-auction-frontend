@@ -4,41 +4,46 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'
 import AuctionTable from '../common/AuctionTable';
 import Swal from 'sweetalert2';
-import {errortoast} from '../fucntions/toast';
+import { errortoast } from '../fucntions/toast';
 
 export default function ViewAuction() {
     const [activetab, setactibetab] = useState('live');
     const [auctionData, setauctionData] = useState([]);
-    console.log(auctionData);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [data, setData] = useState([]);
+    const[original,setoriginal] = useState([]);
+    
     useEffect(() => {
         if (activetab === 'live') {
             axios.get("/user/get-live-auctions")
                 .then((response) => {
                     if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }else{
+                    } else {
                         errortoast(response.data.msg);
-                      }
+                    }
                 })
         }
-        else if (activetab==='upcoming') { 
+        else if (activetab === 'upcoming') {
             axios.get("/user/get-upcoming-auctions")
                 .then((response) => {
                     if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }else{
+                    } else {
                         errortoast(response.data.msg);
-                      }
+                    }
                 })
         }
-        else if (activetab==='completed') { 
+        else if (activetab === 'completed') {
             axios.get("/user/get-completed-auctions")
                 .then((response) => {
                     if (response.data.status === 200) {
                         setauctionData(response.data.data)
-                    }else{
+                        setoriginal(response.data.data)
+                    } else {
                         errortoast(response.data.msg);
-                      }
+                    }
                 })
         }
     }, [activetab])
@@ -63,24 +68,64 @@ export default function ViewAuction() {
                     .then((response) => {
                         if (response.data.status === 200) {
                             console.log(response.data.msg);
-                            
+
                             Swal.fire(
                                 'Deleted!',
                                 'Your file has been deleted.',
                                 'success'
-                            ).then((result)=>window.location.reload())
-                        }else{
+                            ).then((result) => window.location.reload())
+                        } else {
                             errortoast(response.data.msg);
-                          }
+                        }
                     });
-                
+
             }
         });
     };
+
+    function convert_str_to_date (dateString){
+        // Split the date and time parts
+        const [datePart, timePart] = dateString.split(', ');
+
+        // Split the date part into day, month, and year
+        const [day, month, year] = datePart.split('-').map(Number);
+
+        // Split the time part into hours and minutes
+        const [hours, minutes] = timePart.split(':').map(Number);
+
+        // Create the date object
+        const dateObject = new Date(year, month - 1, day, hours, minutes);
+        return dateObject
+    }
+
+    const fetchDataBetweenDates = () => {
+
+        const filteredData = original.filter(item => {
+            const itemStartDate = convert_str_to_date(item.start_date);
+            const itemEndDate = convert_str_to_date(item.end_date);
+            const filterStartDate = new Date(startDate);
+            const filterEndDate = new Date(endDate);
+          
+            return itemStartDate >= filterStartDate && itemEndDate <= filterEndDate;
+          });
+        
+        setauctionData(filteredData);
+    };
     return (
         <>
+            
+            <ul>
+                {data.map(item => (
+                    <li key={item.id}>{item.name} - {item.date_field}</li>
+                ))}
+            </ul>
+            {/* <div className="container mt-3 d-flex flex-wrap justify-content-end">
+                <form className="d-flex">
+                    <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+                    <button className="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div> */}
             <div className="container mt-3 d-flex flex-wrap justify-content-center">
-                
                 <ul className="nav nav-tabs">
                     <li className="nav-item ">
                         <Link className={`nav-link  ${activetab === 'live' && 'active'}`} aria-current="page" to="#" onClick={() => setactivetab('live')}>Live</Link>
@@ -92,7 +137,7 @@ export default function ViewAuction() {
                         <Link className={`nav-link ${activetab === 'completed' && 'active'}`} to="#" onClick={() => setactivetab('completed')}>Completed</Link>
                     </li>
                 </ul>
-                <AuctionTable column={[{ key: "auction_id", lable: "Auction Id" }, { key: "product_category_name", lable: "Product category" }, { key: "product_name", lable: "Product Name" }, { key: "product_quantity", lable: "Quantity Of Product" }, { key: "state_name", lable: "State" }, { key: "city_name", lable: "City" }, { key: "start_price", lable: "Start Price" }, { key: "start_date", lable: "Start Date" }, { key: "end_date", lable: "End Date" }]} data={auctionData} handledelete={handleDelete}/>
+                <AuctionTable fetchDataBetweenDates={fetchDataBetweenDates} activetab={activetab} startDate={startDate} endDate={endDate}  column={[{ key: "auction_id", lable: "Auction Id" }, { key: "product_category_name", lable: "Product category" }, { key: "product_name", lable: "Product Name" }, { key: "product_quantity", lable: "Quantity Of Product" }, { key: "state_name", lable: "State" }, { key: "city_name", lable: "City" }, { key: "start_price", lable: "Start Price" }, { key: "start_date", lable: "Start Date" }, { key: "end_date", lable: "End Date" }]} data={auctionData} handledelete={handleDelete} setStartDate={setStartDate} setEndDate={setEndDate}/>
             </div>
 
         </>

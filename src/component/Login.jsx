@@ -6,6 +6,7 @@ import Auction from '../images/auction .png';
 import styles from '../css/login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import jwt from 'jwt-decode';
+import Swal from 'sweetalert2';
 import RegisterUser from './RegisterUser';
 
 export default function Login() {
@@ -43,7 +44,8 @@ export default function Login() {
                   }
             })
     }, [])
-    const handleSave = (userData) => {
+    const handleSave = (e,userData) => {
+        e.preventDefault();
         if (flag === 'add') {
             if (userData.password !== userData.confirm_password) {
                 errortoast('Password and confirm password is not matched');
@@ -96,7 +98,10 @@ export default function Login() {
         // Use the login state to make API requests or handle login logic
         console.log('Submitted login details:', login);
     };
-
+    const forgot=(e)=>{
+        e.preventDefault();
+        Swal.fire('Please contact Admin for reset your password !');
+    }
 
     return (
         <>
@@ -112,33 +117,6 @@ export default function Login() {
                     flag={flag}
                 />
             )}
-            {/* <div id="login-form">
-                <div id="login-head">
-                <img src={Auction} style={{ width: 70, height: 70 }} />
-                    <h3>Auction</h3>
-                </div>
-                <div id="login-details">
-                    <form action="" >
-
-                        <div id="user">
-                            <input type="text" placeholder="Phone Number" name="phone" onChange={handleInputChange} />
-                        </div>
-
-                        <div id="pass">
-                            <input type="password"  placeholder="Password" name="password" onChange={handleInputChange}/>
-                        </div>
-
-                        <div id="submit" className="d-flex justify-content-center">
-                            <input type="submit" value="Log-In" onClick={handleSubmit}/>
-                        </div>
-                        <div className="sign-up">
-                            Not a user?
-                        <a href="#" onClick={click} >Register</a>
-                        </div>
-                    </form>
-
-                </div>
-            </div> */}
             <form onSubmit={handleSubmit} className='needs-validation was-validated'>
                 <div className='d-flex align-items-center min-vh-100 mx-4'>
                     <div className={`container border p-3 shadow ${styles['login-form']}`}>
@@ -159,6 +137,9 @@ export default function Login() {
                             <div className="form-floating mb-3">
                                 {/* <input type="password" name="password" onChange={handleInputChange} className="form-control" id="floatingPassword" placeholder="Password" minLength={4} required/> */}
                                 Not a user? <Link to='#' onClick={() => { setflag("add"); setModalShow(true) }}>Register</Link>
+                            </div>
+                            <div className="form-floating">
+                                <Link to="#" onClick={forgot}>Forgot Password?</Link>
                             </div>
                         </div>
                         <div className="d-flex justify-content-center">

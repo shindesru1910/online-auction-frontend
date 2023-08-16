@@ -8,6 +8,7 @@ function AddEditUserModal(props) {
   const { states, onHide, flag, editUserData, handlesave } = props;
   // const [isChecked, setIsChecked] = useState(false);
   const [cities, setcities] = useState([]);
+  
   // console.log(cities);
   let InitialState;
   if (flag === 'edit') {
@@ -59,6 +60,7 @@ function AddEditUserModal(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          
           <div className="row mb-2">
             <div className="col-3 d-flex justify-content-center">Fisrt Name</div>
             <div className="col">

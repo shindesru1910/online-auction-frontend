@@ -42,7 +42,7 @@ export default function AuctionSummary() {
     {AuctionSummary.map((summary,index) =>(
     <tr key={index}>
       <td>{index + 1}</td>
-      <td>{summary.bidder_name}</td>
+      {index==0 ? <td>{summary.bidder_name} 🏆</td> :<td>{summary.bidder_name}</td>}
       <td>{summary.bidder_phone}</td>
       <td>₹ {summary.bid}</td>
       <td>{summary.datetime}</td>
