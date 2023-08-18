@@ -46,16 +46,17 @@ export default function BidCard() {
         axios.post("/user/get-card-auction-information", formdata)
             .then((response) => {
                 if (response.data.status === 200) {
+                    console.log(response.data.data)
                     setBidCardData(response.data.data)
-                    axios.post("/user/get-user-bid", formdata)
-                        .then((response) => {
-                            if (response.data.status === 200) {
-                                console.log(response.data)
-                                setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
-                            } else {
-                                errortoast(response.data.msg);
-                            }
-                        })
+                    // axios.post("/user/get-user-bid", formdata)
+                    //     .then((response) => {
+                    //         if (response.data.status === 200) {
+                    //             console.log(response.data)
+                    //             setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
+                    //         } else {
+                    //             errortoast(response.data.msg);
+                    //         }
+                    //     })
                 } else {
                     errortoast(response.data.msg);
                 }
