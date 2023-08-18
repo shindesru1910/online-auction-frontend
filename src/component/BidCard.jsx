@@ -16,7 +16,6 @@ export default function BidCard() {
     const [bid, setbid] = useState('');
     const [remainingTime, setRemainingTime] = useState(0);
 
-
     const { id } = useParams();
 
 
@@ -46,7 +45,7 @@ export default function BidCard() {
             if (doc.exists()) {
                 const firestore_data = doc.data();
 
-                // console.log("auction data: ", firestore_data);
+                console.log("auction data: ", firestore_data);
                 setBidCardData(prev => ({ ...prev, 'no_of_bids': firestore_data.no_of_bids, 'latest_bid': parseFloat(firestore_data.latest_bid) }))
             }
         });
@@ -56,8 +55,11 @@ export default function BidCard() {
 
                 const firestore_data = doc.data();
                 // console.log(firestore_data);
-                // console.log("user bid data: ", firestore_data);
+                console.log("user bid data: ", firestore_data);
                 setBidCardData(prev => ({ ...prev, 'your_bid': parseFloat(firestore_data.bid) }))
+            }else{
+                setBidCardData(prev => ({ ...prev, 'your_bid': 0 }))
+
             }
         });
 
@@ -68,14 +70,15 @@ export default function BidCard() {
             .then((response) => {
                 if (response.data.status === 200) {
                     setBidCardData(response.data.data)
-                    axios.post("/user/get-user-bid", formdata)
-                        .then((response) => {
-                            if (response.data.status === 200) {
-                                setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
-                            }else{
-                                errortoast(response.data.msg);
-                              }
-                        })
+                    // axios.post("/user/get-user-bid", formdata)
+                    //     .then((response) => {
+                    //         if (response.data.status === 200) {
+                    //             console.log(response.data)
+                    //             setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
+                    //         }else{
+                    //             errortoast(response.data.msg);
+                    //           }
+                    //     })
                 }else{
                     errortoast(response.data.msg);
                   }

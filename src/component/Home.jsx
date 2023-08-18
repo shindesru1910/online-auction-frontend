@@ -4,7 +4,7 @@ import Cityimg from '../images/city.svg'
 import Stateimg from '../images/state.svg'
 import userimg from '../images/user.svg'
 import Auctionimg from '../images/auction.svg'
-import Productimg from'../images/product.svg'
+// import Productimg from'../images/product.svg'
 import Product_cat_img from '../images/product_cat.svg'
 import BidAuction from '../images/bidcard.svg'
 
@@ -18,7 +18,7 @@ function Home() {
                 <Card name="User" to="/user" img ={userimg}/>
                 <Card name="Auction" to="/auction" img ={Auctionimg}/>
                 <Card name="Go To Auction" to="/go-to-auction" img ={BidAuction}/>
-                <Card name="Product" to="/product" img={Productimg}/>
+                {/* <Card name="Product" to="/product" img={Productimg}/> */}
                 <Card name="Product Category" to="/category" img={Product_cat_img}/>
             </div>
         </>

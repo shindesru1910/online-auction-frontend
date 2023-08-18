@@ -98,7 +98,6 @@ export default function AddAuction() {
     axios.post("/user/create-auction", formdata)
       .then((response) => {
         if (response.data.status === 200) {
-          console.log(response.data.msg);
           successtoast(response.data.msg);
           window.location.reload();
         }

@@ -16,7 +16,6 @@ function City() {
       .then((response) => {
         if (response.data.status === 200) {
           setcity(response.data.data)
-          // console.log(response.data.data);
         }else{
           errortoast(response.data.msg);
         }
@@ -30,6 +29,7 @@ function City() {
           }
       })
   }, [])
+
   const handleSave = (citydata) => {
     if(flag === 'add'){
       let formdata = new FormData()
