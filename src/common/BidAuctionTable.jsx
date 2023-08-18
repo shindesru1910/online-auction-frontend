@@ -18,7 +18,7 @@ export default function BidAuctionTable(props) {
         <>
             <div className="table-responsive">
                 <table className="table table-bordered mt-2">
-                    <thead>
+                    <thead className="">
                         <tr>
                             <th scope="col">No.</th>
                             {column.map((col, index) => <th scope="col" key={index}>{col.lable}</th>)}

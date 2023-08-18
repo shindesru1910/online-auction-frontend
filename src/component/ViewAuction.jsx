@@ -104,7 +104,9 @@ export default function ViewAuction() {
             const itemStartDate = convert_str_to_date(item.start_date);
             const itemEndDate = convert_str_to_date(item.end_date);
             const filterStartDate = new Date(startDate);
+            filterStartDate.setDate(filterStartDate.getDate() - 1);
             const filterEndDate = new Date(endDate);
+            filterEndDate.setDate(filterEndDate.getDate() + 1);
           
             return itemStartDate >= filterStartDate && itemEndDate <= filterEndDate;
           });

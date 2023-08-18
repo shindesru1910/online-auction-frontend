@@ -40,6 +40,26 @@ export default function BidCard() {
             setRemainingTime(0);
         }
 
+        let formdata = new FormData();
+        formdata.append("auction_id", id)
+        formdata.append("phone", user.userphone)
+        axios.post("/user/get-card-auction-information", formdata)
+            .then((response) => {
+                if (response.data.status === 200) {
+                    setBidCardData(response.data.data)
+                    axios.post("/user/get-user-bid", formdata)
+                        .then((response) => {
+                            if (response.data.status === 200) {
+                                console.log(response.data)
+                                setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
+                            } else {
+                                errortoast(response.data.msg);
+                            }
+                        })
+                } else {
+                    errortoast(response.data.msg);
+                }
+            })
 
         const unsubauction = onSnapshot(doc(db, "auction", id), (doc) => {
             if (doc.exists()) {
@@ -57,32 +77,11 @@ export default function BidCard() {
                 // console.log(firestore_data);
                 console.log("user bid data: ", firestore_data);
                 setBidCardData(prev => ({ ...prev, 'your_bid': parseFloat(firestore_data.bid) }))
-            }else{
+            }
+            else{
                 setBidCardData(prev => ({ ...prev, 'your_bid': 0 }))
-
             }
         });
-
-        let formdata = new FormData();
-        formdata.append("auction_id", id)
-        formdata.append("phone", user.userphone)
-        axios.post("/user/get-card-auction-information", formdata)
-            .then((response) => {
-                if (response.data.status === 200) {
-                    setBidCardData(response.data.data)
-                    // axios.post("/user/get-user-bid", formdata)
-                    //     .then((response) => {
-                    //         if (response.data.status === 200) {
-                    //             console.log(response.data)
-                    //             setBidCardData(prev => ({ ...prev, 'your_bid': response.data.data.bid }))
-                    //         }else{
-                    //             errortoast(response.data.msg);
-                    //           }
-                    //     })
-                }else{
-                    errortoast(response.data.msg);
-                  }
-            })
 
         return () => {
             // Stop listening to changes
@@ -138,13 +137,13 @@ export default function BidCard() {
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..."  style={{height:"50%"}}/>
+                                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..." style={{ height: "50%" }} />
                             </div>
                             <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..."  style={{height:"50%"}}/>
+                                <img src="https://images.unsplash.com/photo-1494905998402-395d579af36f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..." style={{ height: "50%" }} />
                             </div>
                             <div class="carousel-item">
-                                <img src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..." style={{height:"50%"}} />
+                                <img src="https://images.unsplash.com/photo-1485291571150-772bcfc10da5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fGNhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=600&q=60" class="d-block w-100" alt="..." style={{ height: "50%" }} />
                             </div>
                         </div>
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
